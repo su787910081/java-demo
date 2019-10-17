@@ -1,0 +1,24 @@
+[
+    {
+        "id": "lc_home_search",
+        "resourceName": "constructtestrole",
+        "order": 1,
+        "items": [
+            {
+                "id": "lc_home_search_aaa",
+                "resourceName": "lc_home_search_aaa",
+                "order": 1
+            },
+            {
+                "id": "lc_home_search_bbb",
+                "resourceName": "lc_home_search_bbb_name",
+                "order": 1
+            }
+        ]
+    },
+    {
+        "id": "lc_home_pic",
+        "resourceName": "lc_home_pic_name",
+        "order": 1
+    }
+]
