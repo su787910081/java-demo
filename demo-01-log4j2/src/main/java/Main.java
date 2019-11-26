@@ -16,7 +16,7 @@ public class Main {
         for (long i = 1; i < MAX_VALUE; i++) {
             logger.info("i: " + i);
             try {
-                Thread.sleep(500);
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 logger.error("InterruptedException", e);
             }
