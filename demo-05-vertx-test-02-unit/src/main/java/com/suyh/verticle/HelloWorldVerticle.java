@@ -1,4 +1,4 @@
-package com.suyh;
+package com.suyh.verticle;
 
 import io.vertx.core.*;
 import io.vertx.core.http.HttpHeaders;
