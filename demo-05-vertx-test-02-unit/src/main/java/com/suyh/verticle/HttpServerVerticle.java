@@ -12,7 +12,6 @@ public class HttpServerVerticle extends AbstractVerticle {
 
     @Override
     public void start() throws Exception {
-        super.start();
         HttpServer server = vertx.createHttpServer();
 
         Router router = Router.router(vertx);
@@ -27,15 +26,6 @@ public class HttpServerVerticle extends AbstractVerticle {
         });
 
         int port = 8080;
-        server.requestHandler(router).listen(port, res -> {
-            if (res.succeeded()) {
-                logger.info("listening port: " + port);
-                System.out.println("listening port: " + port);
-            } else {
-                logger.error("listen {} failed.", port, res.cause());
-                res.cause().printStackTrace();
-                System.out.println("listen " + port + " failed.");
-            }
-        });
+        server.requestHandler(router).listen(port, new ListenHandler(port, this.getClass().getName()));
     }
 }
