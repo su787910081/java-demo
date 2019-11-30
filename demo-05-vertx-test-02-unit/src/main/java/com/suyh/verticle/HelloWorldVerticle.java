@@ -20,7 +20,7 @@ public class HelloWorldVerticle extends AbstractVerticle {
         int port01 = 8000;
         vertx.createHttpServer().requestHandler(
                 new HttpRequestHandler(vertx, port01))
-                .listen(port01, new ListenHandler(port01));
+                .listen(port01, new ListenHandler(port01, this.getClass().getName()));
     }
 
     /**
@@ -59,26 +59,6 @@ public class HelloWorldVerticle extends AbstractVerticle {
         }
     }
 
-    /**
-     * 处理监听结果
-     */
-    private static class ListenHandler implements Handler<AsyncResult<HttpServer>> {
-        private int port;
 
-        public ListenHandler(int port) {
-            this.port = port;
-        }
-
-        @Override
-        public void handle(AsyncResult<HttpServer> httpServerAsyncResult) {
-            HttpServer result = httpServerAsyncResult.result();
-
-            if (httpServerAsyncResult.succeeded()) {
-                System.out.println("Server is now listening, port: " + port);
-            } else {
-                System.out.println("failed bind port: " + port);
-            }
-        }
-    }
 
 }

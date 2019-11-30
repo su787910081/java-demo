@@ -10,16 +10,18 @@ import java.util.Arrays;
 
 public class Main {
     static {
-        System.setProperty("log4j.configurationFile", "conf/log4j2.xml");
-        System.setProperty("vertx.logger-delegate-factory-class-name",
-                "io.vertx.core.logging.Logg4j2LogDelegateFactory");
+//        System.setProperty("log4j.configurationFile", "conf/log4j2.xml");
+//        System.setProperty("vertx.logger-delegate-factory-class-name",
+//                "io.vertx.core.logging.Logg4j2LogDelegateFactory");
     }
 
     public static void main(String[] args) {
+//        System.out.println("main");
         Vertx vertx = Vertx.vertx();
 
-        start01(vertx);
-        // start02(vertx);
+//        start01(vertx);
+         start02(vertx);
+
     }
 
     // 正常部署各个verticle

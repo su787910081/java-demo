@@ -18,12 +18,12 @@ public class FutureVerticle extends AbstractVerticle {
         listen02(8092);
         listen03(8093);
         listen04(8094);
-        listen05(8095);
+//        listen05(8095);
     }
 
     private void listen01(int port) {
         // 一个普通的接口
-        vertx.createHttpServer().requestHandler(req -> {
+        HttpServer server = vertx.createHttpServer().requestHandler(req -> {
             req.response().putHeader(HttpHeaders.CONTENT_TYPE, "text/plain")
                     .end("Hello, I am FutureVerticle. no Future.");
 
@@ -40,7 +40,9 @@ public class FutureVerticle extends AbstractVerticle {
                     System.out.println("Why I am here?");
                 }
             });
-        }).listen(port);
+        });
+
+        server.listen(port, new ListenHandler(port, this.getClass().getName()));
     }
 
     private void listen02(int port) {
@@ -60,7 +62,7 @@ public class FutureVerticle extends AbstractVerticle {
 
         });
 
-        server.listen(port);
+        server.listen(port, new ListenHandler(port, this.getClass().getName()));
     }
 
     private void listen03(int port) {
@@ -87,7 +89,7 @@ public class FutureVerticle extends AbstractVerticle {
             vertx.eventBus().send("address01", "message01", future01);
         });
 
-        server.listen(port);
+        server.listen(port, new ListenHandler(port, this.getClass().getName()));
     }
 
     private void listen04(int port) {
@@ -135,7 +137,7 @@ public class FutureVerticle extends AbstractVerticle {
             );
         });
 
-        server.listen(port);
+        server.listen(port, new ListenHandler(port, this.getClass().getName()));
     }
 
     // 并发合并，同时进行

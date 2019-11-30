@@ -1,9 +1,11 @@
 package com.suyh;
 
+import io.vertx.ext.unit.TestContext;
 import io.vertx.ext.unit.junit.RepeatRule;
 import io.vertx.ext.unit.junit.Timeout;
 import io.vertx.ext.unit.junit.VertxUnitRunner;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(VertxUnitRunner.class)
@@ -21,5 +23,9 @@ public class APITest {
     @Rule
     public Timeout timeoutRule = Timeout.seconds(60);
 
+    @Test
+    public void testNothing(TestContext ctx) {
+        System.out.println("testNothing");
+    }
 
 }
