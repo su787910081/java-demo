@@ -124,9 +124,11 @@
                     注意：modulate属性是指从启动时间开始算5秒，还是从0秒开始算5秒，运行一下就明白了。
                         modulate: true(默认值) // 会从启动时间开始算 5秒
                         modulate: false // 从 0秒开始算
+                            // 我试了一下，true 时如果日志文件存在，则将其转成一个备份日志文件
+                            // false 时如果日志文件存在，则往这个日志文件中追加日志
                 -->
                 <!-- <TimeBasedTriggeringPolicy interval="5" modulate="true"/> -->
-                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <TimeBasedTriggeringPolicy interval="1" modulate="false"/>
 
                 <SizeBasedTriggeringPolicy size="10 MB"/>
             </Policies>
