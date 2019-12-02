@@ -25,7 +25,7 @@ public class HttpServerVerticle extends AbstractVerticle {
             });
         });
 
-        int port = 8080;
+        int port = 8196;
         server.requestHandler(router).listen(port, new ListenHandler(port, this.getClass().getName()));
     }
 }

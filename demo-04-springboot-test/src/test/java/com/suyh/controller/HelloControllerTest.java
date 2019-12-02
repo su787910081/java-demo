@@ -12,7 +12,9 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
 @RunWith(value = SpringRunner.class)
-@SpringBootTest(classes = App.class,
+@SpringBootTest(
+        // 这里是启动类吧
+        classes = App.class,
         // 使用默认端口
         webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class HelloControllerTest {

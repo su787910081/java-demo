@@ -40,7 +40,7 @@ public class SuyhPrevTest {
         Vertx vertx = Vertx.vertx();
         vertx.createHttpServer()
                 .requestHandler(req -> req.response().end())
-                .listen(16969, testContext.completing());
+                .listen(16979, testContext.completing());
 
         // awaitCompletion 等待完成，5秒超时
         boolean b = testContext.awaitCompletion(5, TimeUnit.SECONDS);

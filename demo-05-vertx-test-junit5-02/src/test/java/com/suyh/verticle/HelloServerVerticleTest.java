@@ -26,7 +26,7 @@ public class HelloServerVerticleTest {
     // 设定超时时间
     void httpServerCheckResponse(Vertx vertx, VertxTestContext testContext) {
         WebClient client = WebClient.create(vertx);
-        client.get(8080, "localhost", "/")
+        client.get(8196, "localhost", "/")
                 .as(BodyCodec.string())
                 .send(testContext.succeeding(response -> testContext.verify(() -> {
                     String body = response.body();
