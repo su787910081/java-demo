@@ -67,9 +67,13 @@
             immediateFlush: 是否立即刷新到文件，默认是true
             其它属性可以参见官方文档: http://logging.apache.org/log4j/2.x/manual/appenders.html#RandomAccessFileAppender
         -->
-        <RandomAccessFile name="RandomFile" fileName="logs/demo-05/VertxTest02Unit.log" immediateFlush="false">
-            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" charset="UTF-8"/>
-        </RandomAccessFile>
+        <!-- TODO: 如果这里打开，则日志系统会出错报异常，不知道为什么。但是提示好像是说
+            "Configuration has multiple incompatible Appenders pointing to the same resource "
+            "配置具有指向同一资源的多个不兼容的附加程序"
+        -->
+<!--        <RandomAccessFile name="RandomFile" fileName="logs/demo-05/VertxTest02Unit.log" immediateFlush="false">-->
+<!--            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" charset="UTF-8"/>-->
+<!--        </RandomAccessFile>-->
 
         <!--
             RollingFileAppender(RollingFile)、RollingRandomAccessFileAppender(RollingRandomAccessFile)
@@ -99,9 +103,10 @@
                 TimeBasedTriggeringPolicy
                     这个滚动策略依赖于filePattern中配置的最具体的时间单位，根据最具体的时间单位进行滚动。
                     这种方式比较简洁。CronTriggeringPolicy策略更强大。
+
         -->
-        <RollingRandomAccessFile name="RollingFile" fileName="logs/demo-05/VertxTest02Unit.log"
-                                 filePattern="logs/demo-05/$${date:yyyy-MM-dd}/VertxTest02Unit.%d{HH-mm}.%i.log">
+        <RollingRandomAccessFile name="RollingFile" fileName="logs/${sys:log4j2.dir:-demo-log}/VertxTest02Unit.log"
+                                 filePattern="logs/${sys:log4j2.dir:-demo-log}/$${date:yyyy-MM-dd}/VertxTest02Unit.%d{HH-mm}.%i.log">
             <PatternLayout
                     pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %-5p %logger{36} [%pid:%t] %c{20}:%L --- %msg%n%ex"
                     charset="UTF-8"/>
@@ -142,7 +147,7 @@
     <Loggers>
         <Root level="trace">
             <AppenderRef ref="Console" />
-            <AppenderRef ref="RandomFile" />
+<!--            <AppenderRef ref="RandomFile" />-->
             <AppenderRef ref="RollingFile" />
 
             <!-- Logger 中也可以添加过滤器 -->

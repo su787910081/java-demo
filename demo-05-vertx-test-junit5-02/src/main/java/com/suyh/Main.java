@@ -10,9 +10,14 @@ import java.util.Arrays;
 
 public class Main {
     static {
-//        System.setProperty("log4j.configurationFile", "conf/log4j2.xml");
-//        System.setProperty("vertx.logger-delegate-factory-class-name",
-//                "io.vertx.core.logging.Logg4j2LogDelegateFactory");
+        // 指定日志配置文件的路径
+        System.setProperty("log4j.configurationFile", "conf/log4j2.xml");
+        // 指定日志实现类
+        System.setProperty("vertx.logger-delegate-factory-class-name",
+                "io.vertx.core.logging.Log4j2LogDelegateFactory");
+        // "io.vertx.core.logging.SLF4JLogDelegateFactory");
+        // 日志配置文件中使用的变量
+        System.setProperty("log4j2.dir", "demo-05");
     }
 
     public static void main(String[] args) {
@@ -20,12 +25,12 @@ public class Main {
         Vertx vertx = Vertx.vertx();
 
 //        start01(vertx);
-         start02(vertx);
+        start02(vertx);
 
     }
 
     // 正常部署各个verticle
-    private static void start01(Vertx  vertx) {
+    private static void start01(Vertx vertx) {
         // 一个vertx 中可以部署多个Verticle
         vertx.deployVerticle(HelloWorldVerticle.class.getName(),
                 new DeployHandler("HelloWorldVerticle"));
@@ -68,6 +73,7 @@ public class Main {
 
     private static class DeployHandler implements Handler<AsyncResult<String>> {
         private String name;
+
         public DeployHandler(String name) {
             this.name = name;
         }

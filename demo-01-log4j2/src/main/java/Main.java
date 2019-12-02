@@ -7,6 +7,8 @@ import static java.lang.Long.MAX_VALUE;
 public class Main {
     static {
         System.setProperty("log4j.configurationFile", "conf/log4j2.xml");
+        // 对应log4j2.xml 配置文件中使用的 ${sys:log4j2.dir:-demo-log}
+        System.setProperty("log4j2.dir", "demo-01");
     }
 
     private static final Logger logger = LoggerFactory.getLogger(Main.class);
