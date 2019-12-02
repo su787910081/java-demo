@@ -54,7 +54,7 @@
             <!-- 格式化日志 -->
             <!-- 关于pattern的格式点击http://logging.apache.org/log4j/2.x/manual/layouts.html#PatternLayout -->
             <PatternLayout
-                    pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger{36} %highlight{-5p} [%pid:%t] %c{20}:%L --- %msg%n%ex"
+                    pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger{36} %highlight{%-5p} [%pid:%t] %c{20}:%L --- %msg%n%ex"
                     charset="UTF-8"/>
         </Console>
 
