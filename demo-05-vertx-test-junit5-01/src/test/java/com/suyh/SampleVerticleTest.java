@@ -30,8 +30,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static org.junit.Assert.assertThat;
-
 /**
  * @author <a href="https://julien.ponge.org/">Julien Ponge</a>
  */
