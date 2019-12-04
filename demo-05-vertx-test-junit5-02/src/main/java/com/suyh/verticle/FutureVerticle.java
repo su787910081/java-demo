@@ -6,7 +6,6 @@ import io.vertx.core.Future;
 import io.vertx.core.eventbus.Message;
 import io.vertx.core.http.HttpHeaders;
 import io.vertx.core.http.HttpServer;
-import io.vertx.core.json.JsonObject;
 import io.vertx.core.net.NetServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -106,10 +105,17 @@ public class FutureVerticle extends AbstractVerticle {
         server.requestHandler(req -> {
             // 客户端请求到达
             // ...
+            logger.debug("client http request is arrived.");
 
             // 请求数据到达
             req.bodyHandler(bodyBuffer -> {
-                logger.debug("bodybuffer");
+                logger.debug("body handler ok.");
+                String codeParam = req.getParam("code");
+                int code = 0;
+                if (codeParam == null || codeParam.isEmpty()) {
+                    code = 0;
+                }
+                logger.debug("body handler code: " + codeParam);
 
                 /**
                  * 传入参数为
@@ -131,16 +137,16 @@ public class FutureVerticle extends AbstractVerticle {
                 Future<Integer> f2 = Future.future();
 
                 f1.complete("f1's result");
-                f1.fail("");
 
                 f1.compose(r -> {
                     System.out.println("f1 handler:" + r);
                     f2.complete(123);
-                } , f2).setHandler(r -> {
+                }, f2).setHandler(r -> {
                     System.out.println("f2 handler:" + r.result());
+
+                    req.response().end("result from: " + port);
                 });
 
-                req.response().end();
             });
         });
 
@@ -156,9 +162,6 @@ public class FutureVerticle extends AbstractVerticle {
 
             // 请求数据到达
             req.bodyHandler(bodyBuffer -> {
-//                JsonObject bodyJson = bodyBuffer.toJsonObject();
-//                logger.info("bodyJson: " + bodyJson);
-
                 /**
                  * 传处理思路:
                  * 1.传入参数类型Function<T, Future<U>>,说明传入的是一个转换函数,
@@ -188,6 +191,8 @@ public class FutureVerticle extends AbstractVerticle {
                     return f3;
                 }).setHandler(r -> {
                     System.out.println(r.result());
+
+                    req.response().end("result from: " + port);
                 });
             });
         });
