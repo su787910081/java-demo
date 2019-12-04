@@ -6,7 +6,10 @@ import io.vertx.core.Future;
 import io.vertx.core.eventbus.Message;
 import io.vertx.core.http.HttpHeaders;
 import io.vertx.core.http.HttpServer;
+import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.net.NetServer;
+import io.vertx.ext.web.Route;
+import io.vertx.ext.web.Router;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,8 +26,36 @@ public class FutureVerticle extends AbstractVerticle {
         listen03(8093);
         listen04(8094);
         listen04_list_01(8191);
-        listen04_list_02(8192);
 //        listen05(8095);
+        useFuture();
+        useFuture02();
+    }
+
+    // Future 的普通使用
+    private void useFuture() {
+        Future<String> future = Future.future();
+        future.setHandler(r -> {
+            System.out.println("result is: " + r.result());
+        });
+        asynchronousMethod(future);
+    }
+
+    // 假设这里面做了一些异步操作，然后在异步操作的结果里面调用 complete 方法，回写异步操作的结果数据。
+    private void asynchronousMethod(Future<String> future) {
+        future.complete("haha");
+    }
+
+    // 这里是真正的调用了一个异步操作
+    private void useFuture02() {
+        Future<String> future = Future.future();
+        future.setHandler(r -> {
+            System.out.println("result is: " + r.result());
+        });
+        vertx.setTimer(5 * 1000, id -> {
+            System.out.println("5s timeout.");
+            // complete 被调用才会触发上面的 setHandler 里面的回调方法
+            future.complete("result");
+        });
     }
 
     private void listen01(int port) {
@@ -102,7 +133,12 @@ public class FutureVerticle extends AbstractVerticle {
     private void listen04_list_01(int port) {
         HttpServer server = vertx.createHttpServer();
 
-        server.requestHandler(req -> {
+        Router router = Router.router(vertx);
+
+        String routePath01 = "/uri01";
+        Route route = router.route(routePath01);
+        route.handler(routingContext -> {
+            HttpServerRequest req = routingContext.request();
             // 客户端请求到达
             // ...
             logger.debug("client http request is arrived.");
@@ -144,19 +180,15 @@ public class FutureVerticle extends AbstractVerticle {
                 }, f2).setHandler(r -> {
                     System.out.println("f2 handler:" + r.result());
 
-                    req.response().end("result from: " + port);
+                    req.response().end("result from: " + routePath01);
                 });
 
             });
         });
 
-        server.listen(port, new ListenHandler(port, this.getClass().getName()));
-    }
-
-    private void listen04_list_02(int port) {
-        HttpServer server = vertx.createHttpServer();
-
-        server.requestHandler(req -> {
+        String routePath02 = "/uri02";
+        router.route(routePath02).handler(routingContext -> {
+            HttpServerRequest req = routingContext.request();
             // 客户端请求到达
             // ...
 
@@ -177,6 +209,15 @@ public class FutureVerticle extends AbstractVerticle {
                  *
                  */
                 Future<String> f1 = Future.future();
+
+                // 所以这里是没有任何意义的
+                // f1.setHandler(r -> {
+                //     // 不会到达这里，是因为后面的compose() 的调用将重置handler(即再次调用setHandler)
+                //     System.out.println("no come here");
+                // });
+
+                // 做了某些操作之后调用此方法，告诉Future 我这里的处理已经完成，你可以继续往下走了。
+                // 比如需要去调用其他服务，然后在其他服务响应回来之后，调用complete. 以表示这个Future 结束了。
                 f1.complete("f1's result");
 
                 f1.compose(r -> {
@@ -192,11 +233,12 @@ public class FutureVerticle extends AbstractVerticle {
                 }).setHandler(r -> {
                     System.out.println(r.result());
 
-                    req.response().end("result from: " + port);
+                    req.response().end("result from: " + routePath02);
                 });
             });
         });
 
+        server.requestHandler(router);
         server.listen(port, new ListenHandler(port, this.getClass().getName()));
     }
 
