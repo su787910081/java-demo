@@ -6,11 +6,16 @@ import io.vertx.core.Future;
 import io.vertx.core.eventbus.Message;
 import io.vertx.core.http.HttpHeaders;
 import io.vertx.core.http.HttpServer;
+import io.vertx.core.json.JsonObject;
 import io.vertx.core.net.NetServer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 
 public class FutureVerticle extends AbstractVerticle {
+
+    private static final Logger logger = LoggerFactory.getLogger(FutureVerticle.class);
 
     @Override
     public void start() throws Exception {
@@ -18,6 +23,8 @@ public class FutureVerticle extends AbstractVerticle {
         listen02(8092);
         listen03(8093);
         listen04(8094);
+        listen04_list_01(8191);
+        listen04_list_02(8192);
 //        listen05(8095);
     }
 
@@ -92,6 +99,103 @@ public class FutureVerticle extends AbstractVerticle {
         server.listen(port, new ListenHandler(port, this.getClass().getName()));
     }
 
+    // 链式操作
+    private void listen04_list_01(int port) {
+        HttpServer server = vertx.createHttpServer();
+
+        server.requestHandler(req -> {
+            // 客户端请求到达
+            // ...
+
+            // 请求数据到达
+            req.bodyHandler(bodyBuffer -> {
+                logger.debug("bodybuffer");
+
+                /**
+                 * 传入参数为
+                 * 1.调用此compose方法的future的handler,
+                 * 2.下一个future
+                 * 处理思路:
+                 * 1.执行compose调用future的回调处理
+                 * 2.如果当前future的回调处理中出错,那么将下一个future置为失败,
+                 * 3.未出错则直接将下一个future返回.
+                 *
+                 * 解释:
+                 * 1.定义2个future
+                 * 2.第4行模拟第1个异步调用完毕,f1得到结果,状态completed.
+                 * 3.f1发起compose,参数1为f1的handler,参数2为下一个future f2
+                 * 4.注意,在f1的handler中,模拟第2个异步调用完毕,f2状态转为completed,从而触发f2的handler.
+                 *
+                 */
+                Future<String> f1 = Future.future();
+                Future<Integer> f2 = Future.future();
+
+                f1.complete("f1's result");
+                f1.fail("");
+
+                f1.compose(r -> {
+                    System.out.println("f1 handler:" + r);
+                    f2.complete(123);
+                } , f2).setHandler(r -> {
+                    System.out.println("f2 handler:" + r.result());
+                });
+
+                req.response().end();
+            });
+        });
+
+        server.listen(port, new ListenHandler(port, this.getClass().getName()));
+    }
+
+    private void listen04_list_02(int port) {
+        HttpServer server = vertx.createHttpServer();
+
+        server.requestHandler(req -> {
+            // 客户端请求到达
+            // ...
+
+            // 请求数据到达
+            req.bodyHandler(bodyBuffer -> {
+//                JsonObject bodyJson = bodyBuffer.toJsonObject();
+//                logger.info("bodyJson: " + bodyJson);
+
+                /**
+                 * 传处理思路:
+                 * 1.传入参数类型Function<T, Future<U>>,说明传入的是一个转换函数,
+                 *      此函数将future中的调用结果T转换为链中的下一个future.
+                 * 2.如果调用是成功的,那么将调用结果作为参数传入这个function执行,
+                 *      就是这句"apply = mapper.apply(ar.result());",返回结果为Future<U>.
+                 * 3.由于事先需要对调用结果ar是否成功判断,所以外面再套了个Future<U> ret.
+                 * 4.将ret返回.
+                 * 这个封装蛮有意思,在compose方法中设置调用者future的handler,
+                 *      在handler中将future中的结果ar传递给compose参数(function),
+                 *      然后执行function,
+                 *      最后将function返回的future用compose内部生成的future封装下返回.
+                 *
+                 */
+                Future<String> f1 = Future.future();
+                f1.complete("f1's result");
+
+                f1.compose(r -> {
+                    System.out.println(r);
+                    Future<String> f2 = Future.future();
+                    f2.complete("f2's result");
+                    return f2;
+                }).compose(r -> {
+                    System.out.println(r);
+                    Future<String> f3 = Future.future();
+                    f3.complete("f3's result");
+                    return f3;
+                }).setHandler(r -> {
+                    System.out.println(r.result());
+                });
+            });
+        });
+
+        server.listen(port, new ListenHandler(port, this.getClass().getName()));
+    }
+
+    // 链式操作，一步接一步顺序操作，任何一步失败，则失败。
     private void listen04(int port) {
         /**
          * 3.4.0+ 链式操作，其中任何一步失败，则失败。
@@ -135,6 +239,8 @@ public class FutureVerticle extends AbstractVerticle {
                         // deal with the result
                     })
             );
+
+            req.response().end();
         });
 
         server.listen(port, new ListenHandler(port, this.getClass().getName()));
