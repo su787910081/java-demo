@@ -52,7 +52,8 @@ public class SimpleTest01 {
         System.out.println(mockedList.get(999));
 
         // 验证get(0) 被调用的次数
-        // TODO: 这个怎么看呀，没理解
+        // 问：这个怎么看呀，没理解?
+        // 签：这里就是校验 mockedList.get(0) 被调用一次。
         verify(mockedList).get(0);
 
         // 参数匹配器
@@ -65,20 +66,24 @@ public class SimpleTest01 {
 
         System.out.println(mockedList.get(999));
 
-        // TODO: 这里为什么出错了？？？
+        // 问：这里为什么出错了？？？
         // 答：这里的verify 如果不指定第二个参数，那么默认为1 次。因为前面调用了多次，所以出错了。这里改为4 就对了。
         // 你也可以验证参数匹配器
         // verify(mockedList).get(anyInt());  // 默认校验是一次调用
+
+        // 改成4 就对了。
         verify(mockedList, times(4)).get(anyInt());
 
-        // TODO: 这个是什么意思？
+        // 问: 这个是什么意思？
         // 使用参数匹配器的注意点：如果你使用参数匹配器，所有参数都必须由匹配器提供。
         // 答：也就是说某个方法的参数都是参数匹配器(如下面的: anyInt()、anyString()、eq("third argument") 这些都是参数匹配器)
         //      参数匹配器的意思就是匹配实际传入的参数是什么，或者匹配到这个参数也可以。
         // verify 的校验方式，首先指定校验哪一个mock 对象，然后指定校验哪个方法。以及校验传入的参数
-        // TODO: 正确的示例如下:
+
+        // 正确的示例如下:
         // verify(mockedList).get(anyInt(), anyString(), eq("third argument"));
-        // TODO: 错误的示例如下：
+
+        // 错误的示例如下：
         // 因为第三个是字符串不是参数匹配器
         // verify(mockedList).get(anyInt(), anyString(), "third argument");
     }

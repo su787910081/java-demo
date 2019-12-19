@@ -61,8 +61,8 @@ public class UtilityHelperTest {
 
         Assert.assertEquals(1 + 2 + 3, sum);
 
-        // TODO: 这里为什么出错呢？ 我只是把上面的那一句代码拷贝下来而以。
-        // 答：这里还需要后跟一行，指出mock 的是哪个静态方法
+        // 这里为什么出错呢？ 我只是把上面的那一句代码拷贝下来而以。
+        // 答：这里还需要后跟一行，指出mock 的是哪个静态方法。现在就没有问题了。
         PowerMockito.verifyStatic(Utility.class, Mockito.atLeastOnce());
         Utility.listIsNullOrEmpty(Mockito.anyList());
     }
