@@ -12,8 +12,12 @@ import org.powermock.modules.junit4.PowerMockRunner;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 对静态方法做mock
+ */
 @RunWith(PowerMockRunner.class)
 // 1. 如果想要对某个类的静态方法进行mock，则必须在PrepareForTest后面加上相应的类名
+// 我试着将这个注释添加在方法上面，但是似乎不行，运行时会有异常。
 @PrepareForTest({Utility.class})
 public class UtilityHelperTest {
     private UtilityHelper utilityHelper;
@@ -25,7 +29,7 @@ public class UtilityHelperTest {
         PowerMockito.mockStatic(Utility.class);
 
         // 平常写时，可以紧跟在mockStatic方法后
-        // PowerMockito.spy(Utility.class);
+         PowerMockito.spy(Utility.class);
 
         dataList = new ArrayList<Integer>();
         dataList.add(1);
@@ -51,6 +55,9 @@ public class UtilityHelperTest {
         // 这一行必须有，如果没有那么前一行的 PowerMockito.verifyStatic(...) 将会报错。
         // 这里的意思是：要验证的是哪个已经mock的静态方法
         Utility.listIsNullOrEmpty(Mockito.anyList());
+
+        // 如果一个类中有多个静态方法mock 被调用，那么每一个 verifyStatic 方法后面跟一个校验的静态方法。
+        // 也就是说每一个 PowerMockito.verifyStatic(...) 后面只对应一个mock 静态方法
     }
 
     @Test
