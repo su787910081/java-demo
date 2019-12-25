@@ -67,8 +67,11 @@
             immediateFlush: 是否立即刷新到文件，默认是true
             其它属性可以参见官方文档: http://logging.apache.org/log4j/2.x/manual/appenders.html#RandomAccessFileAppender
         -->
-        <RandomAccessFile name="RandomFile" fileName="logs/${sys:log4j2.dir:-demo-log}/DemoRandom.log" immediateFlush="false">
-            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" charset="UTF-8"/>
+        <RandomAccessFile name="RandomFile"
+                          fileName="logs/${sys:log4j2.dir:-demo-log}/DemoRandom.log"
+                          immediateFlush="false">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"
+                           charset="UTF-8"/>
         </RandomAccessFile>
 
         <!--
@@ -100,10 +103,9 @@
                     这个滚动策略依赖于filePattern中配置的最具体的时间单位，根据最具体的时间单位进行滚动。
                     这种方式比较简洁。CronTriggeringPolicy策略更强大。
         -->
-        <!--
-            ${sys:log4j2.dir:-demo-log}  对应在程序中使用 System.setProperty("log4j2.dir", "demo-01");
-        -->
-        <RollingRandomAccessFile name="RollingFile" fileName="logs/${sys:log4j2.dir:-demo-log}/DemoRolling.log"
+        <!-- ${sys:log4j2.dir:-demo-log}  <==>  System.setProperty("log4j2.dir", "demo-01"); -->
+        <RollingRandomAccessFile name="RollingFile"
+                                 fileName="logs/${sys:log4j2.dir:-demo-log}/DemoRolling.log"
                                  filePattern="logs/${sys:log4j2.dir:-demo-log}/$${date:yyyy-MM-dd}/DemoRolling.%d{HH-mm}.%i.log">
             <PatternLayout
                     pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %-5p %logger{36} [%pid:%t] %c{20}:%L --- %msg%n%ex"
@@ -142,19 +144,45 @@
             -->
             <DefaultRolloverStrategy max="10"/>
         </RollingRandomAccessFile>
+
+        <!-- 与上面的 RollingFile 一样的配置，删除所有注释需要看的话往前找 -->
+        <RollingRandomAccessFile name="sp"
+                                 fileName="logs/${sys:log4j2.dir:-demo-log}/sp.log"
+                                 filePattern="logs/${sys:log4j2.dir:-demo-log}/$${date:yyyy-MM-dd}/sp.%d{HH-mm}.%i.log">
+            <PatternLayout
+                    pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %-5p %logger{36} [%pid:%t] %c{20}:%L --- %msg%n%ex"
+                    charset="UTF-8"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="false"/>
+                <SizeBasedTriggeringPolicy size="10 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingRandomAccessFile>
     </Appenders>
 
     <Loggers>
         <Root level="trace">
-            <AppenderRef ref="Console" />
-            <AppenderRef ref="RandomFile" />
-            <AppenderRef ref="RollingFile" />
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="RandomFile"/>
+            <AppenderRef ref="RollingFile"/>
 
             <!-- Logger 中也可以添加过滤器 -->
             <Filters>
                 <!-- <LevelRangeFilter minLevel="trace" maxLevel="error" onMatch="ACCEPT" onMismatch="DENY" />-->
             </Filters>
         </Root>
+
+        <!--
+            name 特殊指明某个自定义logger对象  可以为字符串，也可以为指定类的全路径
+            additivity =false则不往root路径下的日志里边打印    level为info级别
+            下边的appender-ref 指定哪一个appender
+         -->
+        <!-- 这里的日志配置，我只写到sp 对应的文件中。其他的日志文件以及控制台都不会有。 -->
+        <!-- 对应的使用是 LoggerFactory.getLogger("spLogger"); -->
+        <logger name="spLogger" additivity="false" level="info" includeLocation="true">
+            <AppenderRef ref="sp"/>
+        </logger>
+
     </Loggers>
 </Configuration>
 

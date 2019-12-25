@@ -2,8 +2,6 @@
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static java.lang.Long.MAX_VALUE;
-
 public class Main {
     static {
         System.setProperty("log4j.configurationFile", "conf/log4j2.xml");
@@ -12,17 +10,24 @@ public class Main {
     }
 
     private static final Logger logger = LoggerFactory.getLogger(Main.class);
+    private static final Logger logSp = LoggerFactory.getLogger("spLogger");
 
     public static void main(String[] args) {
         logger.info("main starting...");
-        for (long i = 1; i < MAX_VALUE; i++) {
+        for (long i = 1; i < 10; i++) {
             logger.info("i: " + i);
             try {
-                Thread.sleep(1000);
+                Thread.sleep(500);
             } catch (InterruptedException e) {
                 logger.error("InterruptedException", e);
             }
         }
+
+        logger.info("logger sp begin");
+        for (int i = 0; i < 5; i++) {
+            logSp.info("logger get name. i: " + i);
+        }
+        logger.info("logger sp finished");
 
         logger.info("main finished.");
     }
