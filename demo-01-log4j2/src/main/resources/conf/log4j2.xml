@@ -4,6 +4,15 @@
 <!-- status：Log4j内部事件记录的等级，只对Log4j本身的事件有效。  -->
 <!-- monitorInterval：Log4j 2 定期检查和应用配置文件的时间间隔（单位：秒，如果更改配置文件，不用重启系统）。  -->
 <Configuration status="info" monitorInteval="60">
+    <!-- 这里相当于设置一组 key-value  name 对应key, 文本对应value -->
+    <!-- spName = sp  |  spFileName = spFile -->
+    <Properties>
+        <Property name="spName">sp</Property>
+        <Property name="spFileName">spFile</Property>
+        <!-- 这里也可以读取到 ${sys:log4j2.dir:-demo-log} 的配置数据值 -->
+        <Property name="fileDir">logs/${sys:log4j2.dir:-demo-log}</Property>
+        <Property name="rollingFileName">DemoRolling</Property>
+    </Properties>
     <!--
         Appender: 简单说Appender就是一个管道，定义了日志内容的去向(保存位置)。
         配置一个或者多个Filter，Filter的过滤机制和Servlet的Filter有些差别，下文会进行说明。
@@ -68,7 +77,7 @@
             其它属性可以参见官方文档: http://logging.apache.org/log4j/2.x/manual/appenders.html#RandomAccessFileAppender
         -->
         <RandomAccessFile name="RandomFile"
-                          fileName="logs/${sys:log4j2.dir:-demo-log}/DemoRandom.log"
+                          fileName="${fileDir}/DemoRandom.log"
                           immediateFlush="false">
             <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"
                            charset="UTF-8"/>
@@ -105,8 +114,8 @@
         -->
         <!-- ${sys:log4j2.dir:-demo-log}  <==>  System.setProperty("log4j2.dir", "demo-01"); -->
         <RollingRandomAccessFile name="RollingFile"
-                                 fileName="logs/${sys:log4j2.dir:-demo-log}/DemoRolling.log"
-                                 filePattern="logs/${sys:log4j2.dir:-demo-log}/$${date:yyyy-MM-dd}/DemoRolling.%d{HH-mm}.%i.log">
+                                 fileName="${fileDir}/${rollingFileName}.log"
+                                 filePattern="${fileDir}/$${date:yyyy-MM-dd}/${rollingFileName}.%d{HH-mm}.%i.log">
             <PatternLayout
                     pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %-5p %logger{36} [%pid:%t] %c{20}:%L --- %msg%n%ex"
                     charset="UTF-8"/>
@@ -146,9 +155,9 @@
         </RollingRandomAccessFile>
 
         <!-- 与上面的 RollingFile 一样的配置，删除所有注释需要看的话往前找 -->
-        <RollingRandomAccessFile name="sp"
-                                 fileName="logs/${sys:log4j2.dir:-demo-log}/sp.log"
-                                 filePattern="logs/${sys:log4j2.dir:-demo-log}/$${date:yyyy-MM-dd}/sp.%d{HH-mm}.%i.log">
+        <RollingRandomAccessFile name="${spName}"
+                                 fileName="${fileDir}/${spFileName}.log"
+                                 filePattern="${fileDir}/$${date:yyyy-MM-dd}/${spFileName}.%d{HH-mm}.%i.log">
             <PatternLayout
                     pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %-5p %logger{36} [%pid:%t] %c{20}:%L --- %msg%n%ex"
                     charset="UTF-8"/>
@@ -180,7 +189,7 @@
         <!-- 这里的日志配置，我只写到sp 对应的文件中。其他的日志文件以及控制台都不会有。 -->
         <!-- 对应的使用是 LoggerFactory.getLogger("spLogger"); -->
         <logger name="spLogger" additivity="false" level="info" includeLocation="true">
-            <AppenderRef ref="sp"/>
+            <AppenderRef ref="${spName}"/>
         </logger>
 
     </Loggers>
