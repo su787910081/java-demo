@@ -4,21 +4,23 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.suyh</groupId>
+    <parent>
+        <groupId>com.suyh</groupId>
+        <artifactId>java-demo</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
     <artifactId>demo-01-log4j2</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <dependencies>
-        <dependency> <!-- 桥接：告诉Slf4j使用Log4j2 -->
+        <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-slf4j-impl</artifactId>
-            <version>2.9.0</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.12</version>
-            <scope>test</scope>
         </dependency>
     </dependencies>
 
