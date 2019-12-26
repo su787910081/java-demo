@@ -1,3 +1,5 @@
+package com.suyh;
+
 import com.alibaba.fastjson.annotation.JSONField;
 
 import java.util.Date;
@@ -56,7 +58,7 @@ public class Menu {
 
     @Override
     public String toString() {
-        return "Menu{" +
+        return "com.suyh.Menu{" +
                 "menuName='" + menuName + '\'' +
                 ", resourceName='" + resourceName + '\'' +
                 ", order=" + order +
