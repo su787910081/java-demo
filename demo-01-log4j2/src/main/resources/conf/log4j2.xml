@@ -11,7 +11,7 @@
         <Property name="spFileName">spFile</Property>
         <!-- 这里也可以读取到 ${sys:log4j2.dir:-demo-log} 的配置数据值 -->
         <Property name="fileDir">logs/${sys:log4j2.dir:-demo-log}</Property>
-        <Property name="rollingFileName">DemoRolling</Property>
+        <Property name="rollingFileName">${sys:rollingFile:-DemoRolling}</Property>
     </Properties>
     <!--
         Appender: 简单说Appender就是一个管道，定义了日志内容的去向(保存位置)。
