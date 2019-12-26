@@ -11,7 +11,7 @@
     <packaging>pom</packaging>
 
     <properties>
-
+        <vertx-version>3.8.2</vertx-version>
     </properties>
 
     <modules>
@@ -36,7 +36,7 @@
             <dependency>
                 <groupId>io.vertx</groupId>
                 <artifactId>vertx-junit5</artifactId>
-                <version>3.8.2</version>
+                <version>${vertx-version}</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
@@ -52,17 +52,22 @@
             <dependency>
                 <groupId>io.vertx</groupId>
                 <artifactId>vertx-web</artifactId>
-                <version>3.8.2</version>
+                <version>${vertx-version}</version>
             </dependency>
             <dependency>
                 <groupId>io.vertx</groupId>
                 <artifactId>vertx-core</artifactId>
-                <version>3.8.2</version>
+                <version>${vertx-version}</version>
             </dependency>
             <dependency>
                 <groupId>io.vertx</groupId>
                 <artifactId>vertx-web-client</artifactId>
-                <version>3.8.2</version>
+                <version>${vertx-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.vertx</groupId>
+                <artifactId>vertx-unit</artifactId>
+                <version>${vertx-version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
