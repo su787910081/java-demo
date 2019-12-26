@@ -17,6 +17,7 @@
     <modules>
         <module>demo-01-log4j2</module>
         <module>demo-02-fastjson</module>
+        <module>demo-05-vertx-test-junit5-01</module>
     </modules>
 
     <dependencyManagement>
@@ -33,6 +34,12 @@
                 <scope>test</scope>
             </dependency>
             <dependency>
+                <groupId>io.vertx</groupId>
+                <artifactId>vertx-junit5</artifactId>
+                <version>3.8.2</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
                 <groupId>commons-io</groupId>
                 <artifactId>commons-io</artifactId>
                 <version>2.4</version>
@@ -41,6 +48,21 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
                 <version>1.2.36</version>
+            </dependency>
+            <dependency>
+                <groupId>io.vertx</groupId>
+                <artifactId>vertx-web</artifactId>
+                <version>3.8.2</version>
+            </dependency>
+            <dependency>
+                <groupId>io.vertx</groupId>
+                <artifactId>vertx-core</artifactId>
+                <version>3.8.2</version>
+            </dependency>
+            <dependency>
+                <groupId>io.vertx</groupId>
+                <artifactId>vertx-web-client</artifactId>
+                <version>3.8.2</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
