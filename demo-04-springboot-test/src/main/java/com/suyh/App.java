@@ -8,6 +8,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class App {
     static {
+        // 指定日志配置文件所在路径，默认情况下是在resources 目录下面找
+        System.setProperty("log4j.configurationFile", "config/log4j2.xml");
         System.setProperty("log4j2.dir", "demo-04-springboot-test");
     }
 
