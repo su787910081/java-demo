@@ -14,7 +14,7 @@ JAR_PATH=$CUR_SHELL_DIR/$JAR_NAME
 JAVA_MEM_OPTS=""
 
 # SPRING_PROFILES_ACTIV="-Dspring.profiles.active=配置文件变量名称"
-SPRING_PROFILES_ACTIV="-Dspring.profiles.active=eureka8751"
+SPRING_PROFILES_ACTIV="-Dspring.profiles.active=eureka01"
 #SPRING_PROFILES_ACTIV=""
 LOG_DIR=$CUR_SHELL_DIR/logs
 LOG_PATH=$LOG_DIR/${JAR_NAME%..log}
