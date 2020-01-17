@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.com.suyh</groupId>
-    <artifactId>springcloud-eureka-server-ha</artifactId>
+    <groupId>com.suyh</groupId>
+    <artifactId>springcloud-eureka-provider</artifactId>
     <version>1.0-SNAPSHOT</version>
 
 
@@ -49,6 +49,7 @@
             <artifactId>spring-cloud-starter-config</artifactId>
         </dependency>
         <dependency>
+            <!-- 做微服务优雅停服，需要使用eureka server -->
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-eureka-server</artifactId>
         </dependency>
@@ -62,5 +63,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
