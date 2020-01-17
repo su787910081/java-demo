@@ -6,11 +6,11 @@
 
     <parent>
         <groupId>com.suyh</groupId>
-        <artifactId>java-demo</artifactId>
+        <artifactId>demo-01-parent</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>demo-01-log4j2</artifactId>
+    <artifactId>demo-02-fastjson</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <dependencies>
@@ -18,13 +18,14 @@
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-slf4j-impl</artifactId>
         </dependency>
+
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
         </dependency>
     </dependencies>
-
-
-
 </project>
-
