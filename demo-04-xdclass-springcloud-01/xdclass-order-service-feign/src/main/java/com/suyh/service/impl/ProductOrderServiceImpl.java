@@ -18,6 +18,7 @@ import java.util.UUID;
 @Service
 public class ProductOrderServiceImpl implements ProductOrderService {
 
+    // 注入feign 客户端
     @Autowired
     private ProductClient productClient;
 
