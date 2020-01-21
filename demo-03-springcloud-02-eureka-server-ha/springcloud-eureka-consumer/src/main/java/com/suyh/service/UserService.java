@@ -32,7 +32,7 @@ public class UserService {
         String url = sb.toString();
 
         // SpringMVC RestTemplate
-        RestTemplate rt = new RestTemplate();
+        RestTemplate restTemplate = new RestTemplate();
 
         // 抽象类对象，这里没有重写新方法。
         ParameterizedTypeReference<List<User>> type =
@@ -40,7 +40,8 @@ public class UserService {
                 };
 
         // ResponseEntity 封装了返回值信息
-        ResponseEntity<List<User>> response = rt.exchange(url, HttpMethod.GET, null/*请求参数*/, type/*返回值*/);
+        ResponseEntity<List<User>> response = restTemplate.exchange(
+                url, HttpMethod.GET, null/*请求参数*/, type/*返回值*/);
         List<User> list = response.getBody();
         return list;
     }
