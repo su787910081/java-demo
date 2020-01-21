@@ -5,9 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.suyh</groupId>
-    <artifactId>xdclass-order-service</artifactId>
+    <artifactId>xdclass-order-service-feign</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>xdclass-order-service</name>
+    <name>xdclass-order-service-feign</name>
     <description>Demo project for Spring Boot</description>
 
     <parent>
@@ -41,6 +41,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
 
     </dependencies>
