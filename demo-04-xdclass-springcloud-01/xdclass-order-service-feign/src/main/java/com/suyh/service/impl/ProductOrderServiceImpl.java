@@ -19,6 +19,7 @@ import java.util.UUID;
 public class ProductOrderServiceImpl implements ProductOrderService {
 
     // 注入feign 客户端
+    // 然后就可以通过它去调用远程微服务的API 接口了。
     @Autowired
     private ProductClient productClient;
 
