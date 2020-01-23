@@ -3,7 +3,7 @@ server:
 
 eureka:
   instance:
-    hostname: eureka01
+    hostname: localhost
   client:
     registerWithEureka: false # 服务注册，false表示不将自已注册到Eureka服务中
     fetchRegistry: false # 服务发现，false表示自己不从Eureka服务中获取注册信息

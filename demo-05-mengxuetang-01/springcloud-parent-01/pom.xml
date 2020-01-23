@@ -12,6 +12,7 @@
         <module>springcloud-02-provider</module>
         <module>springcloud-03-consumer</module>
         <module>springcloud-04-eureka-server</module>
+        <module>springcloud-05-eureka-server-ha</module>
     </modules>
     <packaging>pom</packaging>
 
