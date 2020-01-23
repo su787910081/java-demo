@@ -18,13 +18,8 @@ public class ProductControllerConsumer {
     // private static final String REST_URL_PREFIX = "http://localhost:8001";
     // private static final String REST_URL_PREFIX = "http://microservice-product";
 
-    ProductClientService service;
-
-    // 构造注入
     @Autowired
-    ProductControllerConsumer(ProductClientService service) {
-        this.service = service;
-    }
+    ProductClientService service;
 
     @RequestMapping(value = "/consumer/product/add")
     public boolean add(Product product) {
