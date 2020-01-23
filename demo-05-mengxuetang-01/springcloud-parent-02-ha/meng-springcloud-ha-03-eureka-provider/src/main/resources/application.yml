@@ -1,6 +1,9 @@
 server:
   port: 8001
 
+mysql:
+  dbname: springcloud_db01
+
 mybatis:
   config-location: classpath:mybatis/mybatis.cfg.xml        # mybatis配置文件所在路径
   type-aliases-package: com.suyh.entities  # 所有Entity别名类所在包
@@ -12,7 +15,7 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource            # 当前数据源操作类型
     driver-class-name: com.mysql.cj.jdbc.Driver             # mysql驱动包
-    url: jdbc:mysql://eureka01:3306/springcloud_db01?serverTimezone=GMT%2B8  # 数据库名称
+    url: jdbc:mysql://eureka01:3306/${mysql.dbname}?serverTimezone=GMT%2B8  # 数据库名称
     username: root
     password: root
     dbcp2:

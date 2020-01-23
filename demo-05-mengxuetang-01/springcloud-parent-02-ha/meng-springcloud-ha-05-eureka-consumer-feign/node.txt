@@ -1,0 +1,9 @@
+Feign: 它整合了Ribbon 与RestTemplate 实现了以Http 为协议的Rest 网络请求。以及LoadBalance 的负载负载策略。
+相比于使用 Ribbon + RestTemplate 的方式，更简单，更直接。并且是以面向接口编程的方式处理。
+
+1. 在启动类上添加注解：
+    @EnableFeignClients(basePackages = "com.suyh.service")
+2. 添加一个接口，在添加上面添加注解：
+    @FeignClient(value = "microservice-product")
+    表示这个接口可以直接访问到指定的一个微服务，在这个接口中定义的所有接口将会以负载均衡以及Rest 的方式访问到指定的微服务。
+    但是这个接口里面的方法要与微服务中的controller 保持一致。
