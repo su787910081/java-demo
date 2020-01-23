@@ -30,4 +30,4 @@ eureka:
       # defaultZone: http://eureka6001.com:6001/eureka,http://eureka6002.com:6002/eureka
   instance:
     instanceId: ${spring.application.name}:${server.port} # 等价于microservice-product:8001
-    prefer-ip-address: true #访问路径就会显示成IP地址
+    prefer-ip-address: true #访问路径就会显示成IP地址 - 在鼠标在页面上悬浮时，浏览器左下角显示成IP地址
