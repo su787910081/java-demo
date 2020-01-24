@@ -1,0 +1,15 @@
+开启zuul 路由功能，之后。通过这个zuul 服务访问其他服务的时候就可以通过这个zuul 微服务来调用了。
+    具体的调用URL，如: http://localhost:7001/microservice-product/product/get/1
+    这里是添加了微服务名称 "microservice-product" 的调用路径。
+
+我们可以添加路由配置，然后就不需要在URL 中添加微服务名称而是直接调用API 就可以了。
+    http://localhost:7001/product/get/1
+    相比上面的URL，少了"/microservice-product" 微服务名称
+
+我们还可以添加我们的自定义过滤器
+    继承一个抽象类 "ZuulFilter" 并实现它的抽象方法，然后将其加到 SpringBean 对象中，由Spring 来管理。
+
+
+
+
+

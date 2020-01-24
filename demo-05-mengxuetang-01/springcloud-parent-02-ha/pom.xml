@@ -15,6 +15,9 @@
         <module>meng-springcloud-ha-05-eureka-consumer-feign</module>
         <module>meng-springcloud-ha-06-eureka-provider-hystrix</module>
         <module>meng-springcloud-ha-07-consumer-hystrix</module>
+        <module>meng-springcloud-ha-08-zuul-gateway</module>
+        <module>meng-springcloud-ha-08-zuul-gateway</module>
+        <module>meng-springcloud-ha-08-zuul-gateway</module>
     </modules>
 
     <packaging>pom</packaging>
