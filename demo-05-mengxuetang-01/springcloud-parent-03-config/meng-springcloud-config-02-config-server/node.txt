@@ -1,0 +1,9 @@
+ConfigServer 是提供到GitHub 拉取相关的配置文件的一个微服务，自己并不提供其他的功能。
+    所以其他的服务要想从配置中心拉取自己的配置还需要来访问此微服务，然后请求拉取相应的配置文件数据。
+
+访问测试
+    http://localhost:5001/${配置文件名，在github 上面的}-${spring.profiles.active}.yml
+    访问开发环境配置: http://localhost:5001/microservice-config-application-dev.yml
+    访问生产环境配置: http://localhost:5001/microservice-config-application-prod.yml
+
+访问不存在的时，将只会显示默认属性
