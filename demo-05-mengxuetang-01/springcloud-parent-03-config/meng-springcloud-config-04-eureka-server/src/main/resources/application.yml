@@ -1,0 +1,14 @@
+# 这里配置的是默认值，但是我们还有一个bootstrap.yml 配置文本。
+# 因为bootstrap.yml 配置文件的优先级更高，所以会使用它里面的配置。
+# 也就是说会那里面配置的ConfigServer 中去拉取我所需要的配置信息，然后做为此项目的配置信息。
+# 如果我们最终通过8080 端口访问到了此服务那就说明我们的配置服务出了问题，没有拿到我们想到的配置信息
+server:
+  port: 6100
+
+spring:
+  application:
+    name: microservice-eureka-server-6100
+
+
+
+

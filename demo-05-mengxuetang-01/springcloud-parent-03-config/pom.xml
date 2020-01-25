@@ -11,6 +11,7 @@
         <module>meng-springcloud-config-01-api</module>
         <module>meng-springcloud-config-02-config-server</module>
         <module>meng-springcloud-config-03-config-client</module>
+        <module>meng-springcloud-config-04-eureka-server</module>
     </modules>
 
     <packaging>pom</packaging>
