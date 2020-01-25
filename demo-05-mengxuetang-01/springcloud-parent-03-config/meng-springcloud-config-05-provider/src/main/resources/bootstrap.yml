@@ -1,0 +1,13 @@
+# 一定要记得呀，做为一个ConfigClient 没有什么代码的添加，但是的话需要添加依赖库。
+# 只有添加了依赖库的微服务才会到ConfigServer 去提取远程仓库的配置信息
+spring:
+  cloud:
+    config:
+      # github 上的配置文件名称，注意没有 yml 后缀
+      name: microservice-config-product
+      # 本次访问环境配置荐
+      profile: dev
+      # 远程仓库的分支名
+      label: master
+      # ConfigServer 配置中心的访问地址，通过它获取 microservice-config-application.yml 的配置信息
+      uri: http://localhost:5001
