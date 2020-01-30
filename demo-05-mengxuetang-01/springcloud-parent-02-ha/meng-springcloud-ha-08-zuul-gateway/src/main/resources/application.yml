@@ -18,17 +18,20 @@ eureka:
     instanceId: ${spring.application.name}:${server.port} # 指定实例ID,就不会显示主机名了
     preferIpAddress: true     #访问路径可以显示IP地址
 
+# 路由配置
+# * 匹配26 个字母，
+# ** 匹配任意多个任意字符
 zuul:
   routes:
     provider-product:    # 路由名称，名称任意，路由名称唯一
       path: /product/** # 访问路径
       serviceId: microservice-product # 指定服务ID，会自动从Eureka中找到此服务的ip和端口
       stripPrefix: false # 代理转发时去掉前缀，false:代理转发时不去掉前缀 例如:为true时请求 /product/get/1，代理转发到/get/1
-
     # 如果多个服务需要经过路由，则同povider-product方式继续添加，例如：
     #provider-order:
       #path: /order/**
       #serviceId: microservice-order
       #stripPrefix: false
+
 
 

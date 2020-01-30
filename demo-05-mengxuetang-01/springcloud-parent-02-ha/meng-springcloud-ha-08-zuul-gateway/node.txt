@@ -1,7 +1,11 @@
 开启zuul 路由功能，之后。通过这个zuul 服务访问其他服务的时候就可以通过这个zuul 微服务来调用了。
-    具体的调用URL，如: http://localhost:7001/microservice-product/product/get/1
+    如果原来对某个微服务的调用是: http://localhost:8001/product/get/1
+    现在通过网关调用的URL 就是: http://localhost:7001/microservice-product/product/get/1
+        所以测试网关服务就使用这个URL 地址。
     这里是添加了微服务名称 "microservice-product" 的调用路径。
+    以及调用端口改为网关微服务的端口7001, 所以这里不需要知道原来微服务的端口，同时可以做到负载均衡。
 
+application.yml 中做路由配置
 我们可以添加路由配置，然后就不需要在URL 中添加微服务名称而是直接调用API 就可以了。
     http://localhost:7001/product/get/1
     相比上面的URL，少了"/microservice-product" 微服务名称
