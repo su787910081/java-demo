@@ -19,8 +19,8 @@ eureka:
 #自定义路由映射
 zuul:
   routes:
-    order-service: /apigateway/**
-    product-service: /apigateway/**
+    order-service: /apigateway/order/**
+    product-service: /apigateway/product/**
   # 统一入口为上面的配置，其他入口忽略
   # 禁止用户使用微服务名称来访问接口，
   # 而必须使用网关路由配置给出的配置进行访问，需要添加下面这个配置
@@ -32,5 +32,9 @@ zuul:
   # 忽略整个服务不对外提供接口
   # 那么这些微服务的接口就只能通过原始的微服务路径访问
   # ignored-services: order-service
+
+  # 处理http 请求头为空的问题，这个属性会过滤掉一些HEADERS 里面的某些KEY 值过滤掉，不往下游传递。
+  # 这里给这个过滤的值为空，也就是说不对任何KEY 进行过滤，全部往下游传递
+  sensitive-headers:
 
 
