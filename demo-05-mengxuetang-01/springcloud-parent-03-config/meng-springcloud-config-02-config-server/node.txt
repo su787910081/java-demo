@@ -6,7 +6,10 @@ ConfigServer 是提供到GitHub 拉取相关的配置文件的一个微服务，
     访问开发环境配置: http://localhost:5001/microservice-config-application-dev.yml
     访问生产环境配置: http://localhost:5001/microservice-config-application-prod.yml
 
-访问不存在的时，将只会显示默认属性
+访问的那个不存在的时，将只会显示默认属性
+
+如果是一个SpringCloudConfig 的一个客户端，我们只需要将依赖添加到pom.xml 文件中就可以了。然后再添加 bootstrap.xml 系统级别配置文件。
+    添加了依赖并不需要任何代码添加。只要加了依赖其他的事就交给框架去处理了。
 
 
 留下一个问题：

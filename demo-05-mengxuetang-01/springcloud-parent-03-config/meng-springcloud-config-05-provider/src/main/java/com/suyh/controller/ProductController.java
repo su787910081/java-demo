@@ -3,6 +3,7 @@ package com.suyh.controller;
 import com.suyh.entities.Product;
 import com.suyh.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,6 +13,8 @@ import java.util.List;
  */
 @RestController
 public class ProductController {
+    @Value("${spring.datasource.url}")
+    private String dbUrl;
 
     @Autowired
     private ProductService productService;
@@ -31,4 +34,8 @@ public class ProductController {
         return productService.list();
     }
 
+    @RequestMapping(value = "/product/dbUrl", method = RequestMethod.GET)
+    public String getDbUrl() {
+        return dbUrl;
+    }
 }
