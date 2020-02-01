@@ -1,0 +1,32 @@
+
+
+配置中心的访问方式（一定要注意语法，如果有问题，会出错）
+    多种访问路径，可以通过启动日志去查看
+    例子 http://localhost:9100/product-service.yml
+
+    /{name}-{profiles}.properties
+    /{name}-{profiles}.yml
+    /{name}-{profiles}.json
+    /{label}/{name}-{profiles}.yml
+
+    name 服务器名称
+    profile 环境名称，开发、测试、生产
+    lable 仓库分支、默认master分支
+
+
+bootstrap.yml 中加载配置文件有两种，
+    1. ${spring.application.name}-${spring.cloud.config.profile}
+        按服务名称和环境名称组合
+    2. ${spring.cloud.config.name}-${spring.cloud.config.profile}
+        按配置名称和环境名称组合
+但是这两种配置文件名称是有优先级的，第2 种的优先级比第一种的优先级高。
+    若第二种在bootstrap.yml 文件中配置了值，那么就会取其值对应的配置文件信息。若文件不存在，则会全部使用默认配置，而不会再去取第1 种的配置数据；
+
+git 仓库中的没有环境名称的配置文件，会和指定环境名称组合的配置文件进行聚合，所以可以将它们的默认配置添加到这个配置文件中。
+    然后将不同的配置放在各自的环境配置文件中。
+    如: product-service.yml 中可以添加一些公共的配置。
+        然后在product-service-dev.yml 中添加开发环境的配置。
+        在product-service-test.yml 中添加测试环境的配置。
+        在product-service-prod.yml 中添加生产环境的配置。
+    当然了，也可以通过分支来区分。
+

@@ -1,0 +1,26 @@
+eureka:
+  client:
+    register-with-eureka: true
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
+spring:
+  application:
+    name: product-service
+  # 指定从哪个配置中心读取
+  cloud:
+    config:
+      discovery:
+        service-id: config-server
+        enabled: true
+      profile: dev
+      label: master
+      name: product-config
+
+
+# git 仓库中同时存在 ${spring.application.name}-${spring.cloud.config.profile} (product-service-dev.yml)
+#    和 ${spring.cloud.config.name}-${spring.cloud.config.profile} (product-config-dev.yml)
+#    时，将会拉取的数据是按后面的那一个来拉取的，只有当后没有配置时才会使用前一个
+#    若配置了${spring.cloud.config.name}-${spring.cloud.config.profile} 的值，但是git 仓库中没有文件，则会使用默认的配置文件，
+#     而不会去使用 前面的那个配置文件信息来加载配置信息。
+

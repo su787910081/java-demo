@@ -15,8 +15,8 @@ import java.util.List;
 @RequestMapping("/api/v1/product")
 public class ProductController {
 
-    @Value("${server.port}")
-    private String port;
+//    @Value("${server.port}")
+//    private String port;
 
     @Autowired
     private ProductService productService;
@@ -32,7 +32,7 @@ public class ProductController {
         Product result = new Product();
 
         BeanUtils.copyProperties(product, result);
-        result.setName(result.getName() + " data from port=" + port);
+//        result.setName(result.getName() + " data from port=" + port);
         return result;
     }
 
