@@ -30,6 +30,19 @@ git 仓库中的没有环境名称的配置文件，会和指定环境名称组�
         在product-service-prod.yml 中添加生产环境的配置。
     当然了，也可以通过分支来区分。
 
+curl post 请求
+    # 给config-client 微服务发送POST 请求
+    # 似乎不行呀，没发送成功还是什么其它的原因
+    # 其原因就是对应的配置文件已经重新拉取了，只是没有更新 @Value 注解上对应的值 而以。
+    # 要更改这个值，需要在对应的类上面添加注解@RefreshScope 才会实时更新。
+    curl http://localhost:8774/actuator/bus-refresh -X POST
+
+发送了这个POST 请求之后，配置文件就会从git 仓库中重新拉取。
+但是我们还需要在 @Value() 对应的类上面添加注解 @RefreshScope 那么对应的配置数据才会变更。
+
+使用post 请求发送到某一个微服务集群，那么这个集群的所有微服务的配置都会一起更新配置文件。
+
+
 问题：
     config-server 要依赖eureka-server 做高可用。
     eureka-server 要依赖config-server 做动态配置。
