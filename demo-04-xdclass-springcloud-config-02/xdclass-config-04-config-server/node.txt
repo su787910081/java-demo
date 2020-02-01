@@ -30,3 +30,7 @@ git 仓库中的没有环境名称的配置文件，会和指定环境名称组�
         在product-service-prod.yml 中添加生产环境的配置。
     当然了，也可以通过分支来区分。
 
+问题：
+    config-server 要依赖eureka-server 做高可用。
+    eureka-server 要依赖config-server 做动态配置。
+    那这两个是只能取其一吗，能共存吗？
