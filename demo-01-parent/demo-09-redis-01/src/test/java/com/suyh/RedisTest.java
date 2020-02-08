@@ -1,5 +1,6 @@
 package com.suyh;
 
+import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.junit.Test;
 import redis.clients.jedis.HostAndPort;
 import redis.clients.jedis.Jedis;
@@ -58,5 +59,33 @@ public class RedisTest {
         System.out.println(jc.get("sex"));
 
         jc.close();
+    }
+
+    @Test
+    public void clusterConnection() {
+        // 收集节点信息，整个集群，任意提供至少1个节点数量信息即可
+        Set<HostAndPort> nodes = new HashSet<>();
+        nodes.add(new HostAndPort("192.168.159.136", 7001));
+        nodes.add(new HostAndPort("192.168.159.136", 7002));
+        nodes.add(new HostAndPort("192.168.159.136", 7003));
+
+        // 构造对象之前，需要先创建一个配置对象
+        GenericObjectPoolConfig config = new GenericObjectPoolConfig();
+        config.setMaxIdle(8);
+        config.setMaxTotal(200);
+
+        JedisCluster cluster = new JedisCluster(nodes, 1000, config);
+        for (int i = 0; i < 100; i++) {
+            String key = "jt_key_" + i;
+            String value = "value_" + i;
+            cluster.set(key, value);
+        }
+
+        for (int i = 0; i < 100; i++) {
+            String key = "jt_key_" + i;
+            System.out.println("key: " + key + ", value: " + cluster.get(key));
+        }
+
+        cluster.close();
     }
 }
