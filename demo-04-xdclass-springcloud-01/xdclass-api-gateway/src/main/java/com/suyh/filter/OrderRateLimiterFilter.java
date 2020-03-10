@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * 订单限流
+ * 详细说话可以查看 LoinFilter 的注释
  * google guava 框架
  */
 @Component

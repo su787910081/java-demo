@@ -9,7 +9,8 @@ import org.springframework.web.client.RestTemplate;
 @SpringBootApplication
 public class OrderServiceRibbonApplication {
     public static void main(String[] args) {
-        SpringApplication.run(OrderServiceApplication.class, args);
+//        SpringApplication.run(OrderServiceApplication.class, args);
+        SpringApplication.run(OrderServiceRibbonApplication.class, args);
     }
 
     // 添加了@LoadBalanced 注解之后，注入的RestTemplate 就拥有了负载均衡的能力

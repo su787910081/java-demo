@@ -19,7 +19,9 @@ eureka:
 #自定义路由映射
 zuul:
   routes:
+    # 以 /apigateway/order/ 开头的api 地址都会被转到 order-service 微服务
     order-service: /apigateway/order/**
+    # 以 /apigateway/product/ 开头的api 地址都会被转到 product-service 微服务
     product-service: /apigateway/product/**
   # 统一入口为上面的配置，其他入口忽略
   # 禁止用户使用微服务名称来访问接口，
