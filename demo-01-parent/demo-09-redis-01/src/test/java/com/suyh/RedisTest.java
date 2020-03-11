@@ -6,6 +6,7 @@ import redis.clients.jedis.HostAndPort;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisCluster;
 import redis.clients.jedis.JedisPoolConfig;
+import redis.clients.jedis.exceptions.JedisDataException;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -19,6 +20,9 @@ public class RedisTest {
     public void test01() {
         Jedis jedis = new Jedis("192.168.159.135", 6381);
 
+        // 权限认证
+        jedis.auth("ynwl2020");
+
         if (jedis.exists("name")) {
             String result = jedis.get("name");
             System.out.println("name: " + result);
@@ -27,6 +31,7 @@ public class RedisTest {
             System.out.println("set name");
         }
 
+        // 10 秒有效期的数据
         jedis.setex("color", 10, "red");
 
         jedis.close();
@@ -87,5 +92,30 @@ public class RedisTest {
         }
 
         cluster.close();
+    }
+
+    @Test
+    public void test03() {
+        Jedis jedis = new Jedis("10.38.16.152");
+
+        try {
+            // 权限认证
+            String auth = jedis.auth("ynwl2020");
+            System.out.println("auth result string: " + auth);
+
+            Set<String> keys = jedis.keys("*");
+            System.out.println("keys: " + keys);
+        } catch (JedisDataException e) {
+            System.out.println("message: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("exception.");
+            e.printStackTrace();
+        }
+
+        // 10 秒有效期的数据
+        jedis.setex("color", 10, "red");
+        System.out.println("setex color");
+
+        jedis.close();
     }
 }
