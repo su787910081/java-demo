@@ -20,9 +20,17 @@ eureka:
 zuul:
   routes:
     # 以 /apigateway/order/ 开头的api 地址都会被转到 order-service 微服务
+    # 同时，在默认情况下。这些前缀将会被去掉，然后再以后面的路径去访问实际的微服务API
+    # 例如: localhost/apigateway/order/listOrder 到order-service 的路径就是: localhost/listOrder
     order-service: /apigateway/order/**
     # 以 /apigateway/product/ 开头的api 地址都会被转到 product-service 微服务
-    product-service: /apigateway/product/**
+    # 我们可以使用参数：stripPrefix来指定不去掉前缀。
+    product-service: # 路由名称，名称任意，路由名称唯一。当以这种方式进行路由配置时这个名称任意，只需要唯一就可以了。
+      path: /apigateway/product/** # 访问路径
+      serviceId: product-service # 指定服务ID，会自动从Eureka中找到此服务的ip和端口
+      # 代理转发时是否去掉前缀，false: 代理转发时不去掉前缀 true: 代理转发时去掉前缀(默认配置)
+      # 例如: 为true时请求 /product/get/1，代理转发到/get/1
+      stripPrefix: false
   # 统一入口为上面的配置，其他入口忽略
   # 禁止用户使用微服务名称来访问接口，
   # 而必须使用网关路由配置给出的配置进行访问，需要添加下面这个配置
