@@ -1,3 +1,7 @@
+代码自动生成工具，下载客户端。登录使用
+    http://fwjava.com/
+
+
 博客: https://www.cnblogs.com/vipstone/p/9728244.html
 
 使用 mybatis generator 插件说明
