@@ -96,8 +96,7 @@
                     <!-- 是否覆盖 -->
                     <overwrite>true</overwrite>
                     <!-- 自动生成的配置 -->
-                    <!-- 可以将路径指定到其他位置, 比如: src/main/resources/generatorConfig.xml -->
-                    <configurationFile>generatorConfig.xml</configurationFile>
+                    <configurationFile>src/main/resources/mybatis/generatorConfig.xml</configurationFile>
                 </configuration>
             </plugin>
 

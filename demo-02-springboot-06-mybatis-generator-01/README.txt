@@ -13,9 +13,13 @@
 
 
 怎样使用
+1. idea 界面
     点击右边的MAVEN  -->  找到对应的项目(demo02-springboot-06-mybatis-generator-01)
     --> 找到mybaties-generator  --> 点击"mybatis-generator:generate"
     即可
+2. 终端命令行
+    > mvn mybatis-generator:generate
+
 
 
 
