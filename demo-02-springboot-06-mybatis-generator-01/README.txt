@@ -1,3 +1,5 @@
+博客: https://www.cnblogs.com/vipstone/p/9728244.html
+
 使用 mybatis generator 插件说明
 1. pom.xml 中要添加对mybatis 的依赖；
 2. pom.xml 中要添加mybatis generator 插件的配置；

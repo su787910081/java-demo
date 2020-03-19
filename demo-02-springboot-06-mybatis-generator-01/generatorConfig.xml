@@ -42,6 +42,7 @@
         </javaModelGenerator>
 
         <!-- 生成mapxml文件 -->
+        <!-- 这个目录必须存在，若不存在则不会生成对应的文件 -->
         <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources/mybatis" >
             <property name="enableSubPackages" value="false" />
         </sqlMapGenerator>
@@ -51,14 +52,49 @@
             <property name="enableSubPackages" value="false" />
         </javaClientGenerator>
 
-        <table tableName="article" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+        <!-- 需要生成的实体类对应的表名，多个实体类复制多份该配置即可 -->
+        <!-- 每一个table 标签对应数据库中的一张表 -->
+        <!-- 客户/供应商基本信息表结构 -->
+        <table tableName="crm_customer_info"
+               enableCountByExample="true"
+               enableUpdateByExample="true"
+               enableDeleteByExample="true"
+               enableSelectByExample="true"
+               selectByExampleQueryId="true">
             <generatedKey column="id" sqlStatement="Mysql" identity="true" />
         </table>
 
-        <table tableName="user_log" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+        <!-- 客户/供应商结算信息表结构 -->
+        <table tableName="crm_settle_money_info"
+               enableCountByExample="true"
+               enableUpdateByExample="true"
+               enableDeleteByExample="true"
+               enableSelectByExample="true"
+               selectByExampleQueryId="true">
             <generatedKey column="id" sqlStatement="Mysql" identity="true" />
         </table>
 
+        <!-- 客户/供应商联系人信息表 -->
+        <table tableName="crm_contacts_info"
+               enableCountByExample="true"
+               enableUpdateByExample="true"
+               enableDeleteByExample="true"
+               enableSelectByExample="true"
+               selectByExampleQueryId="true">
+            <generatedKey column="id" sqlStatement="Mysql" identity="true" />
+        </table>
+
+        <!-- 收款信息(供应商) -->
+        <table tableName="crm_payee_info"
+               enableCountByExample="true"
+               enableUpdateByExample="true"
+               enableDeleteByExample="true"
+               enableSelectByExample="true"
+               selectByExampleQueryId="true">
+            <generatedKey column="id" sqlStatement="Mysql" identity="true" />
+        </table>
+
+        <!-- 发票信息(客户) -->
         <table tableName="crm_invoice_info"
                enableCountByExample="true"
                enableUpdateByExample="true"
@@ -67,6 +103,8 @@
                selectByExampleQueryId="true">
             <generatedKey column="id" sqlStatement="Mysql" identity="true" />
         </table>
+
+
 
     </context>
 </generatorConfiguration>
