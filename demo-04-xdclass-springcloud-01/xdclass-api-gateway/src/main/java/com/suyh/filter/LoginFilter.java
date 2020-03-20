@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import static org.springframework.cloud.netflix.zuul.filters.support.FilterConstants.PRE_TYPE;
 
+/**
+ * 过滤器与拦截器
+ */
 @Component
 public class LoginFilter extends ZuulFilter {
 

@@ -4,15 +4,15 @@
 
 <mapper namespace="com.suyh.mapper.ProductMapper">
 
-    <select id="findById" resultType="Product" parameterType="Long">
+    <select id="findById" resultType="com.suyh.entities.Product" parameterType="Long">
         select pid, product_name, db_source from product where pid=#{pid};
     </select>
 
-    <select id="findAll" resultType="Product">
+    <select id="findAll" resultType="com.suyh.entities.Product">
         select pid, product_name, db_source from product;
     </select>
 
-    <insert id="addProduct" parameterType="Product">
+    <insert id="addProduct" parameterType="com.suyh.entities.Product">
         INSERT INTO product(product_name, db_source) VALUES(#{productName}, DATABASE());
     </insert>
 
