@@ -1,0 +1,17 @@
+
+
+eureka:
+  client:
+    registerWithEureka: true # 服务注册开关
+    fetchRegistry: true # 服务发现开关
+    serviceUrl: # 注册到哪一个Eureka Server服务注册中心，多个中间用逗号分隔
+      # 访问单机版注册中心
+      # defaultZone: http://localhost:6001/eureka
+      # 访问集群版注册中心
+      # 多个，使用逗号分隔
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/,http://${eureka.instance.hostname}:${server.port}/eureka/
+  instance:
+    instanceId: ${spring.application.name}:${server.port} # 等价于microservice-product:8001
+    prefer-ip-address: true #访问路径就会显示成IP地址 - 在鼠标在页面上悬浮时，浏览器左下角显示成IP地址
+
+
