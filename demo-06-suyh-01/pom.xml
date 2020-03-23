@@ -11,6 +11,7 @@
         <module>suyh-01-api</module>
         <module>suyh-02-gateway</module>
         <module>suyh-03-register</module>
+        <module>suyh-04-sso</module>
     </modules>
 
     <packaging>pom</packaging>
