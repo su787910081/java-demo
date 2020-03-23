@@ -10,8 +10,8 @@
         <Property name="spName">sp</Property>
         <Property name="spFileName">spFile</Property>
         <!-- 这里也可以读取到 ${sys:log4j2.dir:-demo-log} 的配置数据值 -->
-        <Property name="fileDir">logs/${sys:log4j2.dir:-demo-log}</Property>
-        <!-- 指定一个默认日志文件名: DemoRollingDev -->
+        <Property name="fileDir">logs/${sys:log4j2.dir:-log-properties}</Property>
+        <!-- 指定一个默认日志文件名: DemoRollingProd -->
         <Property name="rollingFileName">${sys:rollingFile:-DemoRollingProd}</Property>
     </Properties>
     <!--
