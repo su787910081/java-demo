@@ -1,11 +1,15 @@
 package com.suyh.entity;
 
+import java.io.Serializable;
 import java.util.Set;
 
-public class User {
+public class User implements Serializable {
+    private static final long serialVersionUID = -8315297734779761541L;
+
     private String id;
     private String userName;
     private String password;
+    private String Salt;    // 盐值加密
     /**
      * 用户对应的角色集合
      */
@@ -50,12 +54,21 @@ public class User {
         this.roles = roles;
     }
 
+    public String getSalt() {
+        return Salt;
+    }
+
+    public void setSalt(String salt) {
+        Salt = salt;
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "id='" + id + '\'' +
                 ", userName='" + userName + '\'' +
                 ", password='" + password + '\'' +
+                ", Salt='" + Salt + '\'' +
                 ", roles=" + roles +
                 '}';
     }
