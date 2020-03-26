@@ -1,4 +1,4 @@
-package com.suyh;
+package com.suyh.cluster;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +12,7 @@ public class JedisController {
 
     @RequestMapping("/jedis")
     public String clusterSetGet(String key, String value) {
+        System.out.println("key: " + key + ", value: " + value);
         cluster.set(key, value);
         return cluster.get(key);
     }

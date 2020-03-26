@@ -1,4 +1,4 @@
-package com.suyh;
+package com.suyh.cluster;
 
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.springframework.beans.factory.annotation.Value;

@@ -1,4 +1,4 @@
-package com.suyh;
+package com.suyh.util;
 
 import java.util.List;
 
