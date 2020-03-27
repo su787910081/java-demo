@@ -7,6 +7,7 @@
     <groupId>com.suyh</groupId>
     <artifactId>demo-02-springboot-11-init-01</artifactId>
     <version>1.0-SNAPSHOT</version>
+
     <description>springboot 应用启动后的一些业务数据的初始化操作，使用 ApplicationRunner</description>
 
     <parent>
@@ -47,4 +48,5 @@
             </plugin>
         </plugins>
     </build>
+
 </project>
