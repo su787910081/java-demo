@@ -19,10 +19,10 @@ public class OrderController {
     private ProductOrderService productOrderService;
 
     @RequestMapping("save")
-    // 指定出现熔段时的处理方法(saveOrderFail)。框架会去调用这个方法并且传入相同的参数，并返回相同的返回值
+    // 指定出现熔段时的处理方法为"saveOrderFail"。框架会去调用这个方法并且传入相同的参数，并返回相同的返回值
     // 所以这个方法的签名除了方法名不同，其他的参数与返回值都要相同才可以。
     // 如果这个方法调用正常，没有出现抛出异常情况，那么正常返回此方法的返回值结果。
-    // 否则返回 fallbackMethod 方法的结果
+    // 否则返回 fallbackMethod 指定方法的结果
     // 所以这里处理的是这个方法异常了的处理。
     @HystrixCommand(fallbackMethod = "saveOrderFail")
     public Object save(@RequestParam("user_id") int userId, @RequestParam("product_id") int productId) {
