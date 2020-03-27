@@ -71,8 +71,9 @@ public class SchedulerTask {
      * fixedDelay: 是当任务执行完毕后1分钟在执行。
      *      即：两次任务之间会休息1分钟。
      *
+     * initialDelay: 指定在系统启动初始化一定时间之后再开始运行
      */
-    @Scheduled(fixedRate = 6000)
+    @Scheduled(initialDelay = 10000, fixedRate = 6000)
     public void reportCurrentTime() {
         int c = ++s_count;
         logger.info("c: " + c);
