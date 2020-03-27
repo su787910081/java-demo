@@ -61,15 +61,26 @@ public class SchedulerTask {
 
     // 这个似乎也是每6 秒一次
 
+    private static int s_count = 0;
     /**
      * fixedDelay和fixedRate，单位是毫秒，它们的区别就是：
-     * fixedRate: 是每多次分钟一次，不论你业务执行花费了多少时间。
-     *      我都是1分钟执行1次，
+     * fixedRate: 是每多次分钟一次，不论你业务执行花费了多少时间。我都是1分钟执行1次，
+     *      如果执行的任务实际使用时间超过了定时时间。
+     *      则会在实际时间完成之后马上进入下一次定时任务。
+     *      就算是使用线程池也是一样的
      * fixedDelay: 是当任务执行完毕后1分钟在执行。
+     *      即：两次任务之间会休息1分钟。
      *
      */
     @Scheduled(fixedRate = 6000)
     public void reportCurrentTime() {
-        logger.info("现在时间：" + dateFormat.format(new Date()));
+        int c = ++s_count;
+        logger.info("c: " + c);
+        try {
+            Thread.sleep(10 * 1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        logger.info("c: " + c + ", 现在时间：" + dateFormat.format(new Date()));
     }
 }
