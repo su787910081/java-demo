@@ -2,6 +2,7 @@ package com.suyh.entity;
 
 
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
 import java.text.ParseException;
@@ -21,26 +22,33 @@ public class CrmContactsInfo implements Serializable {
     /**
      * 主键：联系人ID(必填项)(主键ID)
      */
+    // value: 在UI 页面上显示该字段的注释
+    @ApiModelProperty(value = "联系人ID")
     private String contactsId       = null;
     /**
      * 属主ID，映射到客户基本信息表(必填项)
      */
+    @ApiModelProperty(value = "属主ID")
     private String rfCustomerId     = null;
     /**
      * 联系类别
      */
+    @ApiModelProperty(value = "联系类别")
     private String contactsKinds    = null;
     /**
      * 联系人姓名
      */
+    @ApiModelProperty(value = "联系人姓名")
     private String contactsName     = null;
     /**
      * 电话
      */
+    @ApiModelProperty(value = "电话")
     private String phone            = null;
     /**
      * 邮箱
      */
+    @ApiModelProperty(value = "邮箱")
     private String email            = null;
     /**
      * QQ号

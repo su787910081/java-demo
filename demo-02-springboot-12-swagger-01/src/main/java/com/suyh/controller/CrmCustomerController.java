@@ -45,7 +45,7 @@ public interface CrmCustomerController {
     @RequestMapping(value = "/crmCustomerAdd",
             produces = {"application/json;charset=UTF-8"},
             method = RequestMethod.POST)
-    ResultMode<String> crmCustomerAdd(@RequestBody com.suyh.entity.CrmCustomer customer);
+    ResultMode<String> crmCustomerAdd(@RequestBody CrmCustomer customer);
 
     // 客户联系人信息  =====================================================================
     @ApiOperation(value = "添加一条客户的联系人信息",
