@@ -2,7 +2,7 @@ package com.suyh.controller.impl;
 
 import com.suyh.controller.CrmCustomerController;
 import com.suyh.entity.*;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ import java.util.List;
  * @Description:
  * @date 2020-04-03 17:14
  */
-@Controller
+@RestController
 public class CrmCustomerControllerImpl implements CrmCustomerController {
     @Override
     public ResultMode<String> crmCustomerAdd(CrmCustomer customer) {

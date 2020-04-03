@@ -28,8 +28,8 @@ public class SwaggerConfig {
                 .apiInfo(apiInfo())
                 .select()
                 // 指定要扫描的基础包
-                // .apis(RequestHandlerSelectors.basePackage("com.suyh"))
-                .apis(RequestHandlerSelectors.any())
+                .apis(RequestHandlerSelectors.basePackage("com.suyh"))
+//                .apis(RequestHandlerSelectors.any())
                 //扫描所有有注解的api，用这种方式更灵活
                 .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
                 .paths(PathSelectors.any())
