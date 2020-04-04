@@ -2,6 +2,7 @@ package com.suyh;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
+import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.config.IniSecurityManagerFactory;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.mgt.SecurityManager;
@@ -10,6 +11,8 @@ import org.apache.shiro.subject.Subject;
 import org.apache.shiro.util.Factory;
 import org.junit.Assert;
 import org.junit.Test;
+
+import javax.validation.constraints.AssertTrue;
 
 /**
  * 完成用户认证功能
@@ -131,7 +134,7 @@ public class AuthenticationDemoTest {
         System.out.println("1111+salt+hashIterations: " + md5);
     }
 
-    private void login(String iniFile, String username, String pwd) {
+    private Subject login(String iniFile, String username, String pwd) {
         // 构建 SecurityManager 工厂，IniSecurityManagerFactory
         // 可以 从 ini 文件中初始化 SecurityManager 环境
         Factory<SecurityManager> factory = new IniSecurityManagerFactory(iniFile);
@@ -170,6 +173,47 @@ public class AuthenticationDemoTest {
         }
 
         //退出
-        subject.logout();
+        // subject.logout();
+
+        return subject;
     }
+
+    /**
+     * 授权
+     */
+    @Test
+    public void test06Authorization() {
+        Subject subject = login("classpath:shiro06UserRealm03.ini",
+                "zhangsan", "1111");
+
+        // 基于角色的授权
+        // 使用hasRole() 方法 来判断，则不会有异常抛出
+        boolean flag = subject.hasRole("role2");
+        System.out.println(flag);
+        flag = subject.hasRole("role1");
+        System.out.println(flag);
+
+        // -------------------------------------------------
+        try {
+            // 如果使用checkRole() 来判断，则会有异常抛出
+            subject.checkRole("role2");
+        } catch (AuthorizationException e) {
+            // e.printStackTrace();
+        }
+    }
+
+    /**
+     * 授权
+     */
+    @Test
+    public void test07Authorization() {
+        Subject subject = login("classpath:shiro07UserRealm04.ini",
+                "zhangsan", "1111");
+
+        boolean flag = subject.isPermittedAll(
+                "user:add", "user:delete", "user:update");
+        System.out.println(flag);
+    }
+
+
 }
