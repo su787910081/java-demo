@@ -7,6 +7,7 @@ import com.suyh.service.ProductClient;
 import com.suyh.service.ProductOrderService;
 import com.suyh.utils.JsonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -17,6 +18,7 @@ public class ProductOrderServiceImpl implements ProductOrderService {
 
     // 注入feign 客户端
     // 然后就可以通过它去调用远程微服务的API 接口了。
+    @Qualifier("product-service") // @Qualifier("productClientFallback")
     @Autowired
     private ProductClient productClient;
 
