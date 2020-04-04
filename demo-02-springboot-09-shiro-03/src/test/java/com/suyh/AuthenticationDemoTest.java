@@ -15,6 +15,8 @@ import org.junit.Test;
 public class AuthenticationDemoTest {
 
     /**
+     * 通过配置文件进行登录
+     *
      * shiro 认证执行流程
      *     1. 通过shiro 相关api, 创建SecurityManager 及获取Subject 实例;
      *     2. 封装token 信息;
@@ -34,7 +36,7 @@ public class AuthenticationDemoTest {
      *
      */
     @Test
-    public void test01Login() {
+    public void test01LoginIni() {
         // 构建 SecurityManager 工厂，IniSecurityManagerFactory
         // 可以 从 ini 文件中初始化 SecurityManager 环境
         Factory<SecurityManager> factory = new IniSecurityManagerFactory(
@@ -47,7 +49,7 @@ public class AuthenticationDemoTest {
         Subject subject = SecurityUtils.getSubject();
         //创建用户名,密码身份验证 Token
         UsernamePasswordToken token = new UsernamePasswordToken(
-                "zhangsan", "1112");
+                "zhangsan", "1111");
         try {
             //登录，即身份验证
             subject.login(token);
@@ -81,4 +83,19 @@ public class AuthenticationDemoTest {
         subject.logout();
     }
 
+    @Test
+    public void test01LoginJdbc() {
+        Factory<SecurityManager> factory = new IniSecurityManagerFactory(
+                "classpath:shiro02Jdbc.ini");
+        SecurityManager securityManager = factory.getInstance();
+        SecurityUtils.setSecurityManager(securityManager);
+        Subject subject = SecurityUtils.getSubject();
+        UsernamePasswordToken token = new UsernamePasswordToken("zhangsan", "1111");
+
+        try {
+            subject.login(token);
+        } catch (AuthenticationException e) {
+            e.printStackTrace();
+        }
+    }
 }
