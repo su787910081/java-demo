@@ -41,6 +41,12 @@
                 /login=authc
                 /logout=logout
 
+                <!-- 静态资源放行 -->
+                /js/**=anon
+                /css/**=anon
+                /images/**=anon
+
+                <!-- 其他全部要认证 -->
                 /**=authc
             </value>
         </property>

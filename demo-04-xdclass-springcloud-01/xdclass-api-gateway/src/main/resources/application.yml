@@ -16,7 +16,7 @@ eureka:
       defaultZone: http://localhost:8761/eureka/
 
 #/order-service/api/v1/order/save?user_id=2&product_id=1
-#自定义路由映射
+# 自定义路由映射
 zuul:
   routes:
     # 以 /apigateway/order/ 开头的api 地址都会被转到 order-service 微服务
@@ -32,7 +32,7 @@ zuul:
       # 例如: 为true时请求 /product/get/1，代理转发到/get/1
       stripPrefix: false
   # 统一入口为上面的配置，其他入口忽略
-  # 禁止用户使用微服务名称来访问接口，
+  # 禁止用户使用微服务名称来访问接口(前提是每一个微服务名都是以 -service 为后缀)，
   # 而必须使用网关路由配置给出的配置进行访问，需要添加下面这个配置
   # 这一个的忽略是防止人使用微服务名称加API 路径来访问
   # 加上这个配置则会提示 404
