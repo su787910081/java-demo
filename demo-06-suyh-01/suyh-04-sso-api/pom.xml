@@ -12,6 +12,11 @@
     <artifactId>suyh-04-sso-api</artifactId>
 
     <dependencies>
+        <dependency>
+            <groupId>com.suyh</groupId>
+            <artifactId>suyh-01-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
 
         <!--feign依赖-->
         <dependency>

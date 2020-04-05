@@ -3,6 +3,8 @@ package com.suyh.filter;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
+import com.suyh.inner.LoginController;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
@@ -20,6 +22,9 @@ import static org.springframework.cloud.netflix.zuul.filters.support.FilterConst
  */
 @Component
 public class LoginFilter extends ZuulFilter {
+
+    @Autowired
+    private LoginController loginController;
 
     /**
      * 网关发生时机为预处理阶段

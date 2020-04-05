@@ -1,6 +1,6 @@
 
 server:
-  port: 9001
+  port: 9201
 spring:
   application:
     # 当前服务名称
