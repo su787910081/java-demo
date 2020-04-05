@@ -3,6 +3,7 @@ package com.suyh.filter;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
+import com.suyh.entity.ResultModel;
 import com.suyh.inner.LoginController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -79,17 +80,22 @@ public class LoginFilter extends ZuulFilter {
 
         HttpServletRequest request = requestContext.getRequest();
 
-        // 获取请求头中的值
-        String token = request.getHeader("token");
+        System.out.println("准备去登录");
+
+        ResultModel<String> loginRes = loginController.login("suyh", "pwd");
+        System.out.println("登录完成, loginRes: " + loginRes.getErrDesc());
 
         // 登录校验逻辑
-        if (!"tokenValue".equals(token)) {
+        if (loginRes.getErrCode() != ResultModel.SUCCESS_CODE) {
             // JWT springboot 技术，可以用在这个地方
             // 网关校验失败，响应结果。
             requestContext.setSendZuulResponse(false);  // 这个值被置为false 了就说明被拦截禁止了。
             requestContext.setResponseStatusCode(HttpStatus.UNAUTHORIZED.value());
 
-            requestContext.setResponseBody("suyh response body: no login, access failed");
+//             requestContext.setResponseBody("suyh response body: no login, access failed");
+        } else {
+            requestContext.setSendZuulResponse(true);
+
         }
 
         // 登录校验通过，直接放行

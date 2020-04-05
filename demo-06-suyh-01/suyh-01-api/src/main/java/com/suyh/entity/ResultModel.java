@@ -14,8 +14,8 @@ public class ResultModel<T> implements Serializable {
 
     private static final long serialVersionUID = 2168115660376016205L;
 
-    private static final int SUCCESS_CODE = 0;
-    private static final String SUCCESS_DESC = "SUCCESS";
+    public static final int SUCCESS_CODE = 0;
+    public static final String SUCCESS_DESC = "SUCCESS";
 
     /**
      * 执行返回的实体,可以为空.
