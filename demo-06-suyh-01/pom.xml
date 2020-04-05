@@ -9,9 +9,10 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>suyh-01-api</module>
-        <module>suyh-02-gateway</module>
-        <module>suyh-03-register</module>
-        <module>suyh-04-sso</module>
+        <module>suyh-02-gateway-service</module>
+        <module>suyh-03-register-service</module>
+        <module>suyh-04-sso-api</module>
+        <module>suyh-04-sso-service</module>
     </modules>
 
     <packaging>pom</packaging>

@@ -10,7 +10,7 @@ server:
 spring:
   application:
     # 当前服务名称
-    name: register
+    name: register-service
   profiles:
     # 默认使用单机版配置
     active: single
