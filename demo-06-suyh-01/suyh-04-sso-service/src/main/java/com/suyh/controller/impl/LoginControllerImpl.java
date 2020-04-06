@@ -6,6 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Random;
+
 @RestController
 public class LoginControllerImpl implements LoginController {
 
@@ -13,6 +15,17 @@ public class LoginControllerImpl implements LoginController {
     public ResultModel<String> login(String username, String pwd) {
         System.out.println("login, username: " + username + ", pwd: " + pwd);
 
-        return new ResultModel<>("OK");
+        Random random = new Random();
+        boolean isLogin = random.nextBoolean();
+        System.out.println("is login: " + isLogin);
+
+        ResultModel<String> res = null;
+        if (isLogin) {
+            res = new ResultModel<>("OK");
+        } else {
+            res = new ResultModel<>(-1, "login failed", "FAILED");
+        }
+
+        return res;
     }
 }
