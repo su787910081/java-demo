@@ -16,11 +16,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.suyh</groupId>
-            <artifactId>suyh-04-sso-api</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
         </dependency>
