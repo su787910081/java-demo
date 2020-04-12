@@ -22,7 +22,7 @@
 
         <!-- 注释 -->
         <!-- 这里的type里写的是你的自定义实现类的类全路径 -->
-        <commentGenerator type="com.suyh.CustomCommentGenerator">
+        <commentGenerator type="com.suyh.springboot.custom.CustomCommentGenerator">
             <property name="suppressAllComments" value="false"/><!-- 是否取消注释 -->
             <property name="suppressDate" value="true" /> <!-- 是否生成注释代时间戳-->
             <!-- 添加表字段的注释，这个需要同时配置 suppressAllComments = false 默认就是false -->
