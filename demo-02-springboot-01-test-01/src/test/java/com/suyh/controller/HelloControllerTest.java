@@ -18,8 +18,14 @@ import org.springframework.util.MultiValueMap;
         // 使用默认端口
         webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class HelloControllerTest {
+    /**
+     * 这种方式，在这里是没有问题的。但是我在其他地方使用的时候似乎有问题。
+     */
     @Autowired
     private TestRestTemplate restTemplate;
+
+    @Autowired
+    private HelloController helloController;
 
     // get 请求
     @Test
@@ -35,5 +41,13 @@ public class HelloControllerTest {
         multiValueMap.add("name", "suyh02");
         String hi = restTemplate.postForObject("/hello/hi", multiValueMap, String.class);
         Assert.assertEquals("hello suyh02", hi);
+    }
+
+    @Test
+    public void testCallHi() {
+        String name = "aaabbcdsuyh";
+        String hiResult = helloController.hi(name);
+
+        Assert.assertEquals("hello " + name, hiResult);
     }
 }
