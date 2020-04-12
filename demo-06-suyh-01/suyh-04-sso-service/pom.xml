@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>com.com.suyh-04-sso-service</artifactId>
+    <artifactId>suyh-04-sso-service</artifactId>
 
 
     <description>单点登录服务</description>
