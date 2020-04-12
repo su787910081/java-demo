@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(value = SpringRunner.class)
@@ -17,32 +16,18 @@ public class ExampleDemoResourceControllerTest {
     private static Logger logger = LoggerFactory.getLogger(ExampleDemoResourceControllerTest.class);
 
     @Autowired
-    private TestRestTemplate restTemplate;
-
-    @Test
-    public void getNameAutowired() {
-        String autowiredName = restTemplate.getForObject(
-                "/autowired/name", String.class);
-
-        logger.info("test, getNameAutowired result: " + autowiredName);
-
-    }
+    private ExampleDemoResourceController resourceController;
 
     @Test
     public void getNameResource01() {
-
-        String resourceName = restTemplate.getForObject(
-                "/resource/01/name", String.class);
-
-        logger.info("test, getNameResource01 result: " + resourceName);
+        String autowiredName = resourceController.getNameResource01();
+        logger.info("test, getNameResource01 result: " + autowiredName);
     }
 
     @Test
-    public void getNameAutowired01() {
-        String autowiredName = restTemplate.getForObject(
-                "/autowired/01/name", String.class);
+    public void getNameResource02() {
+        String autowiredName = resourceController.getNameResource02();
 
-        logger.info("test, getNameAutowired01 result: " + autowiredName);
-
+        logger.info("test, getNameResource02 result: " + autowiredName);
     }
 }
