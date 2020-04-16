@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 <generatorConfiguration>
-    <!--加载配置文件，为下面读取数据库信息准备-->
+    <!-- 加载配置文件，为下面读取数据库信息准备 -->
     <properties resource="application.properties"/>
 
     <!--defaultModelType="flat" 大数据字段，不分表 -->
@@ -11,13 +11,18 @@
         <property name="autoDelimitKeywords" value="true" />
         <property name="beginningDelimiter" value="`" />
         <property name="endingDelimiter" value="`" />
+
+        <!-- 指定生成的java文件的编码,没有直接生成到项目时中文可能会乱码 -->
         <property name="javaFileEncoding" value="utf-8" />
+
+        <!-- 生成的entity，将implements Serializable -->
         <plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
 
         <plugin type="org.mybatis.generator.plugins.ToStringPlugin" />
 
         <!-- 注释 -->
-        <commentGenerator >
+        <!-- 这里的type里写的是你的自定义实现类的类全路径 -->
+        <commentGenerator type="com.suyh.springboot.custom.CustomCommentGenerator">
             <property name="suppressAllComments" value="false"/><!-- 是否取消注释 -->
             <property name="suppressDate" value="true" /> <!-- 是否生成注释代时间戳-->
             <!-- 添加表字段的注释，这个需要同时配置 suppressAllComments = false 默认就是false -->
@@ -29,6 +34,9 @@
                         connectionURL="${spring.datasource.url}"
                         userId="${spring.datasource.username}"
                         password="${spring.datasource.password}">
+            <!-- 对实体类添加注释映射到表的注释 -->
+            <!-- 设置 useInformationSchema 属性为 true -->
+            <property name="useInformationSchema" value="true" />
         </jdbcConnection>
 
         <!-- 类型转换 -->
