@@ -1,5 +1,11 @@
 package com.suyh.utils;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+import java.io.Serializable;
+
 /**
  * 
  * 消息队列的统一消息对象类.
@@ -8,7 +14,12 @@ package com.suyh.utils;
  * @date  2020-03-31
  *
  */
-public class MQEvent<T> {
+@Getter
+@Setter
+@ToString
+public class MQEvent<T> implements Serializable {
+
+	private static final long serialVersionUID = -6312797435038522646L;
 
 	public MQEvent() {
 	}
@@ -38,37 +49,4 @@ public class MQEvent<T> {
 	 * 消息业务对象
 	 */
 	private T data;
-	
-	public T getData() {
-		return data;
-	}
-
-	public void setData(T data) {
-		this.data = data;
-	}
-
-	public String getEventId() {
-		return eventId;
-	}
-
-	public void setEventId(String eventId) {
-		this.eventId = eventId;
-	}
-
-	public String getEventType() {
-		return eventType;
-	}
-
-	public void setEventType(String eventType) {
-		this.eventType = eventType;
-	}
-
-	@Override
-	public String toString() {
-		return "MQEvent{" +
-				"eventId='" + eventId + '\'' +
-				", eventType='" + eventType + '\'' +
-				", data=" + data +
-				'}';
-	}
 }

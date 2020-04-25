@@ -29,5 +29,16 @@ public class KafkaReceiver {
         }
     }
 
+//    @KafkaListener(topics = {TOPIC_PREFIX + KafkaConstant.TOPIC_WMS_ORDER, TOPIC_PREFIX + TOPIC_OMS})
+//    public void listenKafka(ConsumerRecord<String, MQEvent> record) {
+//        try {
+//            String topic = record.topic();
+//            MQEvent msg = record.value();
+//            System.out.println("topic: " + topic + ", CustomEvent.msg: " + msg);
+//        } catch (Exception ex) {
+//            System.out.println("kafka消费日志异常-->>" + record.value() + " " + ex.getMessage());
+//        }
+//    }
+
 
 }

@@ -33,6 +33,9 @@ public class KafkaTest {
     @Resource
     private KafkaTemplate<String, String> kafkaTemplate;
 
+    @Resource
+    private KafkaTemplate<String, MQEvent> kafkaTemplateMqEvent;
+
     @Test
     public void testKafkaTemplate() {
         WmsCkOmsShipmentMO data = makeKafkaDataByWmsOut();
@@ -44,6 +47,22 @@ public class KafkaTest {
 
         mqEvent.setEventId(UUID.randomUUID().toString());
         kafkaTemplate.send(topicOms, JSON.toJSONString(mqEvent));
+        System.out.println("kafkaTemplate send data to topic: " + topicOms
+                + ", event id: " + mqEvent.getEventId());
+    }
+
+    @Test
+    public void testKafkaTemplateMqEvent() {
+        // TODO: 未能成功。这个暂时不能用
+        WmsCkOmsShipmentMO data = makeKafkaDataByWmsOut();
+        MQEvent<WmsCkOmsShipmentMO> mqEvent = new MQEvent<>(
+                UUID.randomUUID().toString(), EVENT_WMS_SHIPMENT_OUT, data);
+        kafkaTemplateMqEvent.send(topicWmsOrder, mqEvent);
+        System.out.println("kafkaTemplate send data to topic: " + topicWmsOrder
+                + ", event id: " + mqEvent.getEventId());
+
+        mqEvent.setEventId(UUID.randomUUID().toString());
+        kafkaTemplateMqEvent.send(topicOms, mqEvent);
         System.out.println("kafkaTemplate send data to topic: " + topicOms
                 + ", event id: " + mqEvent.getEventId());
     }
