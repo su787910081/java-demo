@@ -7,9 +7,11 @@ package com.suyh.constant;
  */
 public class KafkaConstant {
     // 主题前缀
-    public static final String TOPIC_PREFIX = "local_";
+    public static final String TOPIC_PREFIX = "local_suyh_";
 
     public static final String TOPIC_WMS_ORDER = "wms_order";
+
+    public static final String TOPIC_OMS = "oms";
 
     public static final String EVENT_TMS_PRE_ORDER = "event_tms_pre_order";
 
