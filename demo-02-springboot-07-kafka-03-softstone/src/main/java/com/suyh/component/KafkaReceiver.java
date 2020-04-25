@@ -19,22 +19,11 @@ import static com.suyh.constant.KafkaConstant.TOPIC_PREFIX;
 public class KafkaReceiver {
 
     @KafkaListener(topics = {TOPIC_PREFIX + KafkaConstant.TOPIC_WMS_ORDER, TOPIC_PREFIX + TOPIC_OMS})
-    public void listenKafka(ConsumerRecord<?, ?> record) {
+    public void listenKafka(ConsumerRecord<String, String> record) {
         try {
             String topic = record.topic();
-            System.out.println("topic: " + topic);
-            String topicWmsOrder = TOPIC_PREFIX + KafkaConstant.TOPIC_WMS_ORDER;
-            if (topicWmsOrder.equals(topic)) {
-                //处理消费事件
-
-                String msg = (String) record.value();
-                System.out.println("topic: " + topic + ", CustomEvent.msg: " + msg);
-                MQEvent mqEvent = JSON.parseObject(msg, MQEvent.class);
-                String eventType = mqEvent.getEventType();
-            } else {
-                String msg = (String) record.value();
-                System.out.println("topic: " + topic + ", CustomEvent.msg: " + msg);
-            }
+            String msg = record.value();
+            System.out.println("topic: " + topic + ", CustomEvent.msg: " + msg);
         } catch (Exception ex) {
             System.out.println("kafka消费日志异常-->>" + record.value() + " " + ex.getMessage());
         }

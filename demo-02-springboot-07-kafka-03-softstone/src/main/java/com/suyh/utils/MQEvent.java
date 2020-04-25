@@ -61,6 +61,14 @@ public class MQEvent<T> {
 
 	public void setEventType(String eventType) {
 		this.eventType = eventType;
-	}	
-	
+	}
+
+	@Override
+	public String toString() {
+		return "MQEvent{" +
+				"eventId='" + eventId + '\'' +
+				", eventType='" + eventType + '\'' +
+				", data=" + data +
+				'}';
+	}
 }

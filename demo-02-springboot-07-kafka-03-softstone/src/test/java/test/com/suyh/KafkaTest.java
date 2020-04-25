@@ -30,9 +30,6 @@ public class KafkaTest {
     private static final String topicWmsOrder = TOPIC_PREFIX + KafkaConstant.TOPIC_WMS_ORDER;
     private static final String topicOms = TOPIC_PREFIX + KafkaConstant.TOPIC_OMS;
 
-//    @Resource
-//    private KafkaUtil kafkaUtil;
-
     @Resource
     private KafkaTemplate<String, String> kafkaTemplate;
 
@@ -49,31 +46,6 @@ public class KafkaTest {
         kafkaTemplate.send(topicOms, JSON.toJSONString(mqEvent));
         System.out.println("kafkaTemplate send data to topic: " + topicOms
                 + ", event id: " + mqEvent.getEventId());
-    }
-
-    @Test
-    public void testPushKafka() {
-
-//        WmsCkOmsShipmentMO data = makeKafkaDataByWmsOut();
-//        MQEvent<WmsCkOmsShipmentMO> mqEvent = new MQEvent<>(
-//                UUID.randomUUID().toString(), EVENT_WMS_SHIPMENT_OUT, data);
-//        kafkaUtil.kafkaProducerSend(topicWmsOrder, JSON.toJSONString(mqEvent));
-//
-//        System.out.println("KafkaTest send data to topic: " + topicWmsOrder
-//                + ", event id: " + mqEvent.getEventId());
-//
-//
-//        mqEvent.setEventId(UUID.randomUUID().toString());
-//        kafkaUtil.kafkaProducerSend(topicOms, JSON.toJSONString(mqEvent));
-//
-//        System.out.println("KafkaTest send data to topic: " + topicOms
-//                + ", event id: " + mqEvent.getEventId());
-//
-//        try {
-//            TimeUnit.SECONDS.sleep(3);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
     }
 
     private WmsCkOmsShipmentMO makeKafkaDataByWmsOut() {
