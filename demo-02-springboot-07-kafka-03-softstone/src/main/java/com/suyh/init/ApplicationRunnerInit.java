@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 
+import static com.suyh.constant.KafkaConstant.TOPIC_PREFIX;
 import static com.suyh.constant.KafkaConstant.TOPIC_WMS_ORDER;
 
 /**
@@ -34,9 +35,6 @@ public class ApplicationRunnerInit implements ApplicationRunner {
     @Resource
     private KafkaUtil kaf;
 
-    @Value("${spring.profiles.active:local}")
-    private String topicPrefix;
-
     @Override
     public void run(ApplicationArguments args) throws Exception {
 
@@ -46,9 +44,9 @@ public class ApplicationRunnerInit implements ApplicationRunner {
 
 
         //监听标题
-        String topicWmsOrder = topicPrefix + "_" + TOPIC_WMS_ORDER;
-        String topicOmsService = topicPrefix + "_" + "oms";
-        kaf.kafkaListenerConsumer(new String[]{topicOmsService, topicWmsOrder});
+        String topicWmsOrder = TOPIC_PREFIX + TOPIC_WMS_ORDER;
+        String topicOmsService = TOPIC_PREFIX + "oms";
+//        kaf.kafkaListenerConsumer(new String[]{topicOmsService, topicWmsOrder});
 
         ctx.addApplicationListener(new KafkaCustomMsgListener());
         System.out.println("com.suyh.init.ApplicationRunnerInit ctx: " + ctx);

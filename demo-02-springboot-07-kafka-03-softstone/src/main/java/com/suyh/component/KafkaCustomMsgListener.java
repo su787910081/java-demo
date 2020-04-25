@@ -6,6 +6,7 @@ import com.suyh.utils.CustomEvent;
 import com.suyh.utils.MQEvent;
 import org.springframework.context.ApplicationListener;
 
+import static com.suyh.constant.KafkaConstant.TOPIC_PREFIX;
 
 
 /**
@@ -14,8 +15,6 @@ import org.springframework.context.ApplicationListener;
  * @author 枫澜  on 2019-12-18
  */
 public class KafkaCustomMsgListener implements ApplicationListener<CustomEvent> {
-    private static String topicPrefix = "local";
-
     /**
      * 对监听到的事件进行处理
      *
@@ -26,7 +25,7 @@ public class KafkaCustomMsgListener implements ApplicationListener<CustomEvent> 
         try {
             String topic = event.getTopic();
             System.out.println("topic: " + topic);
-            String topicWmsOrder = topicPrefix + "_" + KafkaConstant.TOPIC_WMS_ORDER;
+            String topicWmsOrder = TOPIC_PREFIX + KafkaConstant.TOPIC_WMS_ORDER;
             if (topicWmsOrder.equals(topic)) {
                 //处理消费事件
                 String msg = event.getMsg();

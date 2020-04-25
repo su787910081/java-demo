@@ -13,6 +13,7 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.config.KafkaListenerContainerFactory;
 import org.springframework.kafka.core.*;
@@ -24,6 +25,10 @@ import javax.annotation.Resource;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
+
+import static com.suyh.constant.KafkaConstant.TOPIC_PREFIX;
+import static com.suyh.constant.KafkaConstant.TOPIC_WMS_ORDER;
 
 
 /**
@@ -173,6 +178,15 @@ public class KafkaUtil {
             logger.error("创建Kafka标题topic异常", ex);
         }
     }
+
+    /**
+     * suyh
+     */
+//    @KafkaListener(topics = {"local_wms_order", "local_oms"})
+//    public void listen(ConsumerRecord<?, ?> record) {
+//        logger.info("topic={}, offset={}, message={}",
+//                record.topic(), record.offset(), record.value());
+//    }
 
     /**
      * 异步开启监听消费者信息
