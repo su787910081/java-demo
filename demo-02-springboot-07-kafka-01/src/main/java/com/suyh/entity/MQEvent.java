@@ -1,4 +1,4 @@
-package com.suyh.utils;
+package com.suyh.entity;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.suyh.Kafka03Application;
 import com.suyh.constant.KafkaConstant;
 import com.suyh.entity.WmsCkOmsShipmentMO;
-import com.suyh.utils.MQEvent;
+import com.suyh.entity.MQEvent;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,8 +1,6 @@
 package com.suyh.component;
 
-import com.alibaba.fastjson.JSON;
 import com.suyh.constant.KafkaConstant;
-import com.suyh.utils.MQEvent;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
