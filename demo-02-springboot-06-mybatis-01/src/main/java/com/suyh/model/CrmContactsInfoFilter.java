@@ -9,7 +9,7 @@ import java.util.Date;
  * 联系人信息表结构，多条联系人信息可以对应一个属主用户 模糊查询实体
  *
  * @author suyh
- * @date 2020-05-03 11:36:27
+ * @date 2020-05-03 11:58:55
  */
 @ApiModel(value = "联系人信息表结构，多条联系人信息可以对应一个属主用户 模糊查询实体")
 public class CrmContactsInfoFilter extends CrmContactsInfo {

@@ -10,7 +10,7 @@ import java.math.BigDecimal;
  * 
  * @table: CRM_CUSTOMER_INFO
  * @author: suyh
- * @date: 2020-05-03 11:36:27
+ * @date: 2020-05-03 11:58:55
  */
 @ApiModel(value = "客户基本信息表结构：内部客户、供应商、承运商")
 public class CrmCustomerInfo extends BaseModel {
@@ -208,6 +208,4 @@ public class CrmCustomerInfo extends BaseModel {
     public void setUsingStatus(BigDecimal usingStatus) {
         this.usingStatus = usingStatus;
     }
-
-
 }

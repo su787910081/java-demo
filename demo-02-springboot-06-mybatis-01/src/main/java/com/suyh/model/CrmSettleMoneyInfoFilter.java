@@ -9,7 +9,7 @@ import java.util.Date;
  * 结算信息公共表结构，客户、供应商、承运商。一条结算信息只对应一个属主客户 模糊查询实体
  *
  * @author suyh
- * @date 2020-05-03 11:36:27
+ * @date 2020-05-03 11:58:55
  */
 @ApiModel(value = "结算信息公共表结构，客户、供应商、承运商。一条结算信息只对应一个属主客户 模糊查询实体")
 public class CrmSettleMoneyInfoFilter extends CrmSettleMoneyInfo {

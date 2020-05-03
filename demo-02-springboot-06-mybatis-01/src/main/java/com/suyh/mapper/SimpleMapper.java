@@ -10,7 +10,7 @@ import java.util.List;
  */
 public interface SimpleMapper<T> {
     /**
-     * 过滤查询
+     * 过滤查询，完全匹配
      * @param filter
      * @return
      */

@@ -10,7 +10,7 @@ import java.math.BigDecimal;
  * 
  * @table: CRM_SETTLE_MONEY_INFO
  * @author: suyh
- * @date: 2020-05-03 11:36:27
+ * @date: 2020-05-03 11:58:55
  */
 @ApiModel(value = "结算信息公共表结构，客户、供应商、承运商。一条结算信息只对应一个属主客户")
 public class CrmSettleMoneyInfo extends BaseModel {
