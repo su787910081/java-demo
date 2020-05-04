@@ -1,28 +1,13 @@
 
-# oracle 配置
-db-oracle:
-  driver: oracle.jdbc.OracleDriver
-  url: jdbc:oracle:thin:@docker:1521:XE
-  username: AfterSales
-  password: oracle_pwd
 
-db-mysql:
-  driver: com.mysql.cj.jdbc.Driver
-  url: jdbc:mysql://docker:3306/suyh_db?characterEncoding=utf-8&useSSL=false
-  username: root
-  password: root
+
 
 spring:
   profiles:
     active: oracle
   datasource:
-    driver-class-name: ${db-oracle.driver}
-    url: ${db-oracle.url}
-    username: ${db-oracle.username}
-    password: ${db-oracle.password}
+    driver-class-name: ${db.driver}
+    url: ${db.url}
+    username: ${db.username}
+    password: ${db.password}
 
-mapper:
-  mappers:
-    - tk.mybatis.mapper.common.Mapper
-    # - tk.mybatis.mapper.common.Mapper2
-  notEmpty: true

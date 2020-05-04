@@ -14,6 +14,8 @@ import java.util.List;
 @SpringBootTest(classes = CommonMapperApplication.class)
 public class CrmCustomerInfoMapperTest {
 
+
+
     @Resource
     private CrmCustomerInfoMapper customerInfoMapper;
 
