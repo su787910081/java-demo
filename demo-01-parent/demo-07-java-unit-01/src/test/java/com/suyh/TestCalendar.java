@@ -39,6 +39,20 @@ public class TestCalendar {
         }
     }
 
+    @Test
+    public void test03() {
+        Calendar calendar = Calendar.getInstance();
+        // System.out.println("calendar: " + System.identityHashCode(calendar));
+        System.out.println("time: " + calendar.getTime());
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        Calendar calendar1 = Calendar.getInstance();
+        System.out.println("time: " + calendar1.getTime());
+    }
+
     public String addDay(String s, int n) {
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");

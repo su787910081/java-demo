@@ -5,17 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.suyh</groupId>
-    <artifactId>demo-02-springboot-06-mybatis-01</artifactId>
+    <artifactId>demo-02-springboot-06-mybatis-02-common</artifactId>
     <version>1.0-SNAPSHOT</version>
-
-    <description>使用mybatis 的一些测试。</description>
-
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.2.2.RELEASE</version>
-        <relativePath/> <!-- lookup parent from repository -->
-    </parent>
+    <description>
+        通用Mapper 的使用DEMO
+        示例git: https://github.com/abel533/MyBatis-Spring-Boot.git
+    </description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -23,11 +18,19 @@
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
 
+
     <dependencies>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!-- 通用Mapper  支持mybatis 3.2.4 及以上版本  -->
+        <dependency>
+            <groupId>com.github.abel533</groupId>
+            <artifactId>mapper</artifactId>
+            <version>2.3.4</version>
         </dependency>
 
         <!-- MySQL Connector -->
@@ -62,11 +65,11 @@
             <scope>compile</scope>
         </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>org.mybatis</groupId>-->
-<!--            <artifactId>mybatis</artifactId>-->
-<!--            <version>3.3.1</version>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.mybatis</groupId>-->
+        <!--            <artifactId>mybatis</artifactId>-->
+        <!--            <version>3.3.1</version>-->
+        <!--        </dependency>-->
         <!--缺少此jar包，导致@Mapper注解无效-->
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
@@ -94,5 +97,19 @@
         </dependency>
 
     </dependencies>
+
+    <build>
+        <!-- 通用Mapper的插件 -->
+        <plugins>
+            <!-- interceptor -->
+<!--            <plugin interceptor="com.github.abel533.mapperhelper.MapperInterceptor">-->
+<!--                &lt;!&ndash;主键自增回写方法,默认值MYSQL &ndash;&gt;-->
+<!--                <property name="IDENTITY" value="MYSQL" />-->
+<!--                &lt;!&ndash;通用Mapper默认接口，我们定义的Mapper需要实现该接口 &ndash;&gt;-->
+<!--                <property name="mappers" value="com.github.abel533.mapper.Mapper" />-->
+<!--            </plugin>-->
+        </plugins>
+    </build>
+
 
 </project>
