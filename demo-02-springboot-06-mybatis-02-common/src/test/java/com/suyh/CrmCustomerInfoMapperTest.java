@@ -30,4 +30,17 @@ public class CrmCustomerInfoMapperTest {
             System.out.println("createBy: " + info.getCreatedBy());
         }
     }
+
+    @Test
+    public void test02() {
+        List<String> names = customerInfoMapper.selectCreateBy();
+        if (names == null || names.isEmpty()) {
+            System.out.println("空数据");
+            return;
+        }
+
+        for (String name : names) {
+            System.out.println(name);
+        }
+    }
 }
