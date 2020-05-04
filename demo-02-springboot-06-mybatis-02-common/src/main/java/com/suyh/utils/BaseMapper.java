@@ -3,12 +3,12 @@ package com.suyh.utils;
 import com.suyh.utils.impl.BaseMapperProvider;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.SelectProvider;
+import tk.mybatis.mapper.common.ConditionMapper;
 import tk.mybatis.mapper.common.Mapper;
-import tk.mybatis.mapper.common.MySqlMapper;
 
 import java.util.List;
 
-public interface BaseMapper<T> extends Mapper<T>, MySqlMapper<T> {
+public interface BaseMapper<T> extends Mapper<T>, ConditionMapper<T> {
 
     // 查询使用SelectProvider，
     // 插入使用@InsertProvider，
