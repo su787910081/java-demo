@@ -43,4 +43,21 @@ public class CrmCustomerInfoMapperTest {
             System.out.println(name);
         }
     }
+
+    @Test
+    public void test03() {
+        CrmCustomerInfo customerInfo = new CrmCustomerInfo();
+        List<CrmCustomerInfo> list = customerInfoMapper.selectPage(customerInfo, 0, 10);
+        if (list == null || list.isEmpty()) {
+            System.out.println("空");
+            return;
+        }
+
+
+        for (Object ob : list) {
+            CrmCustomerInfo info = (CrmCustomerInfo) ob;
+            System.out.println(info);
+        }
+
+    }
 }

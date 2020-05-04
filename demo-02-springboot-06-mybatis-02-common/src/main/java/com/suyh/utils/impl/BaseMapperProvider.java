@@ -20,13 +20,13 @@ public class BaseMapperProvider extends MapperTemplate {
      * 在这里有一点要求，那就是BaseMapperProvider处理BaseMapper<T>中的方法时，
      * 方法名必须一样，因为这里需要通过反射来获取对应的方法，方法名一致一方面是为了减少开发人员的配置，
      * 另一方面和接口对应看起来更清晰。
-     *
+     * <p>
      * 除了方法名必须一样外，入参必须是MappedStatement ms，除此之外返回值可以是void或者SqlNode之一。
      *
      * @param ms
      * @return
      */
-    SqlNode selectSuyh(MappedStatement ms) {
+    SqlNode selectPage(MappedStatement ms) {
         // 首先获取了实体类型，然后通过setResultType将返回值类型改为entityClass，
         // 就相当于resultType=entityClass。
         Class<?> entityClass = getEntityClass(ms);
@@ -52,16 +52,30 @@ public class BaseMapperProvider extends MapperTemplate {
         // 这一段使用属性时用的是 entity. + 属性名，entity来自哪儿？
         // 来自我们前面接口定义处的Param("entity")注解，后面的两个分页参数也是。
         for (EntityColumn column : columns) {
-            StaticTextSqlNode columnNode = new StaticTextSqlNode(
-                    (first ? "" : " AND ") + column.getColumn()
-                            + " = #{entity." + column.getProperty() + "} ");
+            // SetSqlNode
+
+            // [AND] column = #{property}
+            String sqlText = String.format("%s%s = #{entity.%s}",
+                    (first ? "" : " AND "), column.getColumn(), column.getProperty());
+//            String strSource = (first ? "" : " AND ") + column.getColumn()
+//                    + " = #{entity." + column.getProperty() + "} ";
+
+            StaticTextSqlNode columnNode = new StaticTextSqlNode(sqlText);
             if (column.getJavaType().equals(String.class)) {
-                ifNodes.add(new IfSqlNode(columnNode, "entity."
-                        + column.getProperty() + " != null and " + "entity."
-                        + column.getProperty() + " != '' "));
+                // 字符串类型的要判断
+                // property != null and property != ''
+                String sqlTextString = String.format("entity.%s != null and entity.%s != ''",
+                        column.getProperty(), column.getProperty());
+//                String strSource = "entity."
+//                        + column.getProperty() + " != null and " + "entity."
+//                        + column.getProperty() + " != '' ";
+                ifNodes.add(new IfSqlNode(columnNode, sqlTextString));
             } else {
-                ifNodes.add(new IfSqlNode(columnNode, "entity."
-                        + column.getProperty() + " != null "));
+                // 其它类型不需要判空
+                // property != null
+                String sqlTextOther = String.format("entity.%s != null",
+                        column.getProperty());
+                ifNodes.add(new IfSqlNode(columnNode, sqlTextOther));
             }
             first = false;
         }

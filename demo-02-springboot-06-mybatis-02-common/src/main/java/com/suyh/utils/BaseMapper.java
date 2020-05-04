@@ -40,7 +40,7 @@ public interface BaseMapper<T> extends Mapper<T>, MySqlMapper<T> {
      *
      * @return
      */
-    List selectSuyh();
+//    List selectSuyh();
 
     /**
      *
@@ -52,7 +52,7 @@ public interface BaseMapper<T> extends Mapper<T>, MySqlMapper<T> {
      * @return
      */
     @SelectProvider(type = BaseMapperProvider.class, method = "dynamicSQL")
-    List selectPage(@Param("entity") T object, @Param("offset") int offset,
+    List<T> selectPage(@Param("entity") T object, @Param("offset") int offset,
                     @Param("limit") int limit);
 
 }
