@@ -83,6 +83,8 @@ public class CrmCustomerInfoMapperTest {
         // 或者用户名是lisi的
         // 实现排序，多个排序规则以','隔开
         example.setOrderByClause("age desc");
+        Example.Criteria criteria = example.createCriteria();
+        // criteria.andCustomerIdEqualsTo("aaab");
         List<CrmCustomerInfo> users = customerInfoMapper.selectByExample(example);
         for (CrmCustomerInfo user : users) {
             System.out.println(user);
