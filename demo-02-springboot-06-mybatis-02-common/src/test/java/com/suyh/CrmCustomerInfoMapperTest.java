@@ -60,6 +60,22 @@ public class CrmCustomerInfoMapperTest {
 
     }
 
+    @Test
+    public void test04() {
+        CrmCustomerInfo customerInfo = new CrmCustomerInfo();
+        List<CrmCustomerInfo> list = customerInfoMapper.selectModelByFilter(customerInfo);
+        if (list == null || list.isEmpty()) {
+            System.out.println("空");
+            return;
+        }
+
+        // 为什么是两个 null
+        for (CrmCustomerInfo info : list) {
+            System.out.println(info);
+        }
+
+    }
+
     // 还没测试过
     // 这个可以处理复杂的条件判断查询
 

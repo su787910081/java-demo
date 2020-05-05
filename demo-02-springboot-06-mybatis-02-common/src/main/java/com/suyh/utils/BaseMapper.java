@@ -11,7 +11,7 @@ import java.util.List;
 // TODO: 这个注解似乎并不需要呀，我看博客上面也是没有的。
 // 试了下，似乎不行。报错了。
 @RegisterMapper
-public interface BaseMapper<T> extends Mapper<T> {
+public interface BaseMapper<T, Filter> extends Mapper<T> {
 
     // 查询使用SelectProvider，
     // 插入使用@InsertProvider，
@@ -43,7 +43,8 @@ public interface BaseMapper<T> extends Mapper<T> {
      *
      * @return
      */
-//    List selectSuyh();
+    @SelectProvider(type = BaseMapperProvider.class, method = "dynamicSQL")
+    List<T> selectModelByFilter(@Param("filter") Filter filter);
 
     /**
      *
