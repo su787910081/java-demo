@@ -2,7 +2,6 @@ package com.suyh.utils.impl;
 
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.scripting.xmltags.*;
-import org.springframework.stereotype.Component;
 import tk.mybatis.mapper.entity.EntityColumn;
 import tk.mybatis.mapper.mapperhelper.EntityHelper;
 import tk.mybatis.mapper.mapperhelper.MapperHelper;
@@ -27,7 +26,7 @@ public class BaseMapperProvider extends MapperTemplate {
      * @param ms
      * @return
      */
-    SqlNode selectPage(MappedStatement ms) {
+    public SqlNode selectPage(MappedStatement ms) {
         // 首先获取了实体类型，然后通过setResultType将返回值类型改为entityClass，
         // 就相当于resultType=entityClass。
         Class<?> entityClass = getEntityClass(ms);
@@ -85,8 +84,8 @@ public class BaseMapperProvider extends MapperTemplate {
 
         sqlNodes.add(whereSqlNode);
         // 处理分页
-        sqlNodes.add(new IfSqlNode(new StaticTextSqlNode(" LIMIT #{limit}"), "offset==0"));
-        sqlNodes.add(new IfSqlNode(new StaticTextSqlNode(" LIMIT #{limit} OFFSET #{offset} "), "offset>0"));
+//        sqlNodes.add(new IfSqlNode(new StaticTextSqlNode(" LIMIT #{limit}"), "offset==0"));
+//        sqlNodes.add(new IfSqlNode(new StaticTextSqlNode(" LIMIT #{limit} OFFSET #{offset} "), "offset>0"));
         return new MixedSqlNode(sqlNodes);
     }
 }

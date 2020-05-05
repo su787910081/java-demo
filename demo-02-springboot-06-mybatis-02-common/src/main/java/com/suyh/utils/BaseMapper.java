@@ -3,12 +3,15 @@ package com.suyh.utils;
 import com.suyh.utils.impl.BaseMapperProvider;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.SelectProvider;
-import tk.mybatis.mapper.common.ConditionMapper;
+import tk.mybatis.mapper.annotation.RegisterMapper;
 import tk.mybatis.mapper.common.Mapper;
 
 import java.util.List;
 
-public interface BaseMapper<T> extends Mapper<T>, ConditionMapper<T> {
+// TODO: 这个注解似乎并不需要呀，我看博客上面也是没有的。
+// 试了下，似乎不行。报错了。
+@RegisterMapper
+public interface BaseMapper<T> extends Mapper<T> {
 
     // 查询使用SelectProvider，
     // 插入使用@InsertProvider，
