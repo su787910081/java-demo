@@ -53,9 +53,8 @@ public class CrmCustomerInfoMapperTest {
             return;
         }
 
-
-        for (Object ob : list) {
-            CrmCustomerInfo info = (CrmCustomerInfo) ob;
+        // 为什么是两个 null
+        for (CrmCustomerInfo info : list) {
             System.out.println(info);
         }
 
