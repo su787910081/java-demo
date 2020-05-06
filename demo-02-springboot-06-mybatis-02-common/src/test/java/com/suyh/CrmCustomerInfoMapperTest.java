@@ -76,6 +76,21 @@ public class CrmCustomerInfoMapperTest {
 
     }
 
+    @Test
+    public void test05() {
+        List<CrmCustomerInfo> list = customerInfoMapper.select003();
+        if (list == null || list.isEmpty()) {
+            System.out.println("空");
+            return;
+        }
+
+        // 为什么是两个 null
+        for (CrmCustomerInfo info : list) {
+            System.out.println(info);
+        }
+
+    }
+
 
 
     // 还没测试过
