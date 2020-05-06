@@ -76,9 +76,10 @@ public class CrmCustomerInfoMapperTest {
 
     }
 
+
+
     // 还没测试过
     // 这个可以处理复杂的条件判断查询
-
     /**
      * select 字段列
      * from tablename

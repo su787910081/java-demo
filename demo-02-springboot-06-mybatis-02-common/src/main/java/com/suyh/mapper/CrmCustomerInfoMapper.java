@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Select;
 import java.util.List;
 
 public interface CrmCustomerInfoMapper
-        extends BaseMapper<CrmCustomerInfo, CrmCustomerInfo> {
+        extends BaseMapper<CrmCustomerInfo, CrmCustomerInfo>{
 
     @Select("SELECT CREATED_BY FROM CRM_CUSTOMER_INFO")
     List<String> selectCreateBy();

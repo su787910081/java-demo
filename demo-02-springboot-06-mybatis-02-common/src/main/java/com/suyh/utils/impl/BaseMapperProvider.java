@@ -6,6 +6,7 @@ import tk.mybatis.mapper.entity.EntityColumn;
 import tk.mybatis.mapper.mapperhelper.EntityHelper;
 import tk.mybatis.mapper.mapperhelper.MapperHelper;
 import tk.mybatis.mapper.mapperhelper.MapperTemplate;
+import tk.mybatis.mapper.mapperhelper.SqlHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +17,7 @@ public class BaseMapperProvider extends MapperTemplate {
         super(mapperClass, mapperHelper);
     }
 
-    // TODO: 到底可不可以在这一个类中实现多个接口方法
+    // 到底可不可以在这一个类中实现多个接口方法，可以的，现在不就是多个了吗。
     public SqlNode selectModelByFilter(MappedStatement ms) {
         // 首先获取了实体类型，然后通过setResultType将返回值类型改为entityClass，
         // 就相当于resultType=entityClass。
@@ -29,8 +30,12 @@ public class BaseMapperProvider extends MapperTemplate {
         // 对于insert,update,delete来说，这些操作的返回值都是int，所以不需要修改返回结果类型。
         setResultType(ms, entityClass);
 
-        StaticTextSqlNode staticTextSqlNode = new StaticTextSqlNode("SELECT " + EntityHelper.getSelectColumns(entityClass)
-                + " FROM " + tableName(entityClass));
+        String tableName = this.tableName(entityClass);
+
+        // 结合官方与我的示例
+        StaticTextSqlNode staticTextSqlNode = new StaticTextSqlNode(
+                "SELECT " + SqlHelper.getAllColumns(entityClass)
+                        + " FROM " + tableName);
         return staticTextSqlNode;
     }
 
@@ -45,6 +50,76 @@ public class BaseMapperProvider extends MapperTemplate {
      * @return
      */
     public SqlNode selectPage(MappedStatement ms) {
+        return selectPageSuccess(ms);
+    }
+
+    private SqlNode selectPageSuccess(MappedStatement ms) {
+        // 首先获取了实体类型，然后通过setResultType将返回值类型改为entityClass，
+        // 就相当于resultType=entityClass。
+        Class<?> entityClass = getEntityClass(ms);
+
+        // 修改返回值类型为实体类型
+        // 这里为什么要修改呢？因为默认返回值是T，
+        // Java并不会自动处理成我们的实体类，默认情况下是Object，
+        // 对于所有的查询来说，我们都需要手动设置返回值类型。
+        // 对于insert,update,delete来说，这些操作的返回值都是int，所以不需要修改返回结果类型。
+        setResultType(ms, entityClass);
+
+        String tableName = this.tableName(entityClass);
+
+        List<SqlNode> sqlNodes = new ArrayList<>();
+        // 静态的sql部分:select column ... from table
+        // 在EntityHelper.getSelectColumns(entityClass)中还处理了别名的情况。
+        sqlNodes.add(new StaticTextSqlNode(
+                //  "SELECT " + EntityHelper.getSelectColumns(entityClass)
+                "SELECT " + SqlHelper.getAllColumns(entityClass)
+                        + " FROM " + tableName));
+        // 获取全部列
+        Set<EntityColumn> columns = EntityHelper.getColumns(entityClass);
+        List<SqlNode> ifNodes = new ArrayList<>();
+        boolean first = true;
+        // 对所有列循环，生成<if test="property!=null">[AND] column = #{property}</if>
+        // 这一段使用属性时用的是 entity. + 属性名，entity来自哪儿？
+        // 来自我们前面接口定义处的Param("entity")注解，后面的两个分页参数也是。
+        for (EntityColumn column : columns) {
+            // SetSqlNode
+
+            // [AND] column = #{property}
+            String sqlText = String.format("%s%s = #{entity.%s}",
+                    (first ? "" : " AND "), column.getColumn(), column.getProperty());
+//            String strSource = (first ? "" : " AND ") + column.getColumn()
+//                    + " = #{entity." + column.getProperty() + "} ";
+
+            StaticTextSqlNode columnNode = new StaticTextSqlNode(sqlText);
+            if (column.getJavaType().equals(String.class)) {
+                // 字符串类型的要判断
+                // property != null and property != ''
+                String sqlTextString = String.format("entity.%s != null and entity.%s != ''",
+                        column.getProperty(), column.getProperty());
+//                String strSource = "entity."
+//                        + column.getProperty() + " != null and " + "entity."
+//                        + column.getProperty() + " != '' ";
+                ifNodes.add(new IfSqlNode(columnNode, sqlTextString));
+            } else {
+                // 其它类型不需要判空
+                // property != null
+                String sqlTextOther = String.format("entity.%s != null",
+                        column.getProperty());
+                ifNodes.add(new IfSqlNode(columnNode, sqlTextOther));
+            }
+            first = false;
+        }
+        // 将if添加到<where>
+        WhereSqlNode whereSqlNode = new WhereSqlNode(ms.getConfiguration(), new MixedSqlNode(ifNodes));
+
+        sqlNodes.add(whereSqlNode);
+        // 处理分页
+//        sqlNodes.add(new IfSqlNode(new StaticTextSqlNode(" LIMIT #{limit}"), "offset==0"));
+//        sqlNodes.add(new IfSqlNode(new StaticTextSqlNode(" LIMIT #{limit} OFFSET #{offset} "), "offset>0"));
+        return new MixedSqlNode(sqlNodes);
+    }
+
+    private SqlNode selectPageFailed(MappedStatement ms) {
         // 首先获取了实体类型，然后通过setResultType将返回值类型改为entityClass，
         // 就相当于resultType=entityClass。
         Class<?> entityClass = getEntityClass(ms);

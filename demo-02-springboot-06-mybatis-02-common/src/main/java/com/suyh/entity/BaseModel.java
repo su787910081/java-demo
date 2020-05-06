@@ -2,6 +2,7 @@ package com.suyh.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import javax.persistence.Column;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -12,6 +13,7 @@ import java.util.Date;
 public class BaseModel implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    @Column(name = "created_By")
     private String createdBy;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createdTime;
