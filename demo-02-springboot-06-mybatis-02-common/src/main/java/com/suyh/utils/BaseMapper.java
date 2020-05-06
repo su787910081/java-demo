@@ -16,7 +16,7 @@ import java.util.List;
  * mappers: com.suyh.utils.BaseMapper
  */
 @RegisterMapper
-public interface BaseMapper<Model, Filter> extends Mapper<Model> {
+public interface BaseMapper<Model, Filter> {
 
     // 查询使用SelectProvider，
     // 插入使用@InsertProvider，
