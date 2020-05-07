@@ -17,8 +17,7 @@ import java.math.BigDecimal;
  * @date: 2020-05-03 11:58:55
  */
 @ApiModel(value = "客户基本信息表结构：内部客户、供应商、承运商")
-public class CrmCustomerInfo extends BaseModel implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class CrmCustomerInfo extends BaseModel {
 
     /**
      * Column: CUSTOMER_ID

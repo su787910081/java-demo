@@ -8,7 +8,9 @@ import tk.mybatis.mapper.mapperhelper.MapperHelper;
 import tk.mybatis.mapper.mapperhelper.MapperTemplate;
 import tk.mybatis.mapper.mapperhelper.SqlHelper;
 
+import java.sql.Types;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -50,6 +52,14 @@ public class CustomerOracleMapperProvider extends MapperTemplate {
      *           <if test="filter.createdBy != null and filter.createdBy != '' ">
      *             AND created_by LIKE '%' || #{filter.createdBy, jdbcType=NVARCHAR} || '%'
      *           </if>
+     *
+     *           <if test="filter.createdTimeBefore != null ">
+     *             AND created_time >= filter.createTimeBefore
+     *           </if>
+     *
+     *           <if test="filter.createdTimeAfter != null ">
+     *             AND created_time < filter.createdTimeAfter
+     *           </if>
      *         </if>
      *       ]]>
      *
@@ -61,18 +71,54 @@ public class CustomerOracleMapperProvider extends MapperTemplate {
             Set<EntityColumn> columns, String paramFilter) {
         List<SqlNode> ifNodes = new ArrayList<>();
         for (EntityColumn column : columns) {
-            // AND created_by = #{filter.createdBy, jdbcType=NVARCHAR}
-            String sqlText = String.format("AND %s LIKE '%%' || #{%s.%s, jdbcType = %s} || '%%'",
-                    column.getColumn(), paramFilter, column.getProperty(),
-                    column.getJdbcType().toString());
 
-            StaticTextSqlNode columnNode = new StaticTextSqlNode(sqlText);
             if (column.getJavaType().equals(String.class)) {
+                // 字符串的模糊匹配
+                // AND created_by LIKE '%' || #{filter.createdBy, jdbcType=NVARCHAR} || '%'
+                String sqlText = String.format("AND %s LIKE '%%' || #{%s.%s, jdbcType = %s} || '%%'",
+                        column.getColumn(), paramFilter, column.getProperty(),
+                        column.getJdbcType().toString());
+                StaticTextSqlNode columnNode = new StaticTextSqlNode(sqlText);
                 // filter.createdBy != null and filter.createdBy != ''
                 String sqlTextString = String.format("%s.%s != null and %s.%s != ''",
                         paramFilter, column.getProperty(), paramFilter, column.getProperty());
                 ifNodes.add(new IfSqlNode(columnNode, sqlTextString));
+            } else if (column.getJavaType().equals(Date.class)) {
+                // 日期类型的区间匹配
+                String columnProperty = column.getProperty();
+                String propertyBefore = columnProperty + "Before";
+                String propertyAfter = columnProperty + "After";
+
+                // <![CDATA[ AND created_by >= #{filter.createdByBefore, jdbcType=TIMESTAMP} ]]>
+                String sqlTextBefore = String.format(
+                        "<![CDATA[ AND %s >= #{%s.%s, jdbcType = %s} ]]>",
+                        column.getColumn(), paramFilter, propertyBefore,
+                        column.getJdbcType().toString());
+                StaticTextSqlNode columnNodeBefore = new StaticTextSqlNode(sqlTextBefore);
+                // filter.createdByBefore != null
+                String sqlTextStringBefore = String.format(
+                        "%s.%s != null", paramFilter, propertyBefore);
+                ifNodes.add(new IfSqlNode(columnNodeBefore, sqlTextStringBefore));
+
+                // <![CDATA[ AND created_by < #{filter.createdByAfter, jdbcType=TIMESTAMP} ]]>
+                String sqlTextAfter = String.format(
+                        "<![CDATA[ AND %s < #{%s.%s, jdbcType = %s} ]]>",
+                        column.getColumn(), paramFilter, propertyAfter,
+                        column.getJdbcType().toString());
+                StaticTextSqlNode columnNodeAfter = new StaticTextSqlNode(sqlTextAfter);
+                // filter.createdByAfter != null
+                String sqlTextStringAfter = String.format(
+                        "%s.%s != null", paramFilter, propertyAfter);
+                ifNodes.add(new IfSqlNode(columnNodeAfter, sqlTextStringAfter));
             } else {
+                // 其他数据的精确匹配
+                // AND SettleDay = #{filter.SettleDay, jdbcType=NUMERIC}
+                String sqlText = String.format("AND %s = #{%s.%s, jdbcType = %s}",
+                        column.getColumn(), paramFilter, column.getProperty(),
+                        column.getJdbcType().toString());
+
+                StaticTextSqlNode columnNode = new StaticTextSqlNode(sqlText);
+
                 // filter.createdBy != null
                 String sqlTextOther = String.format("%s.%s != null",
                         paramFilter, column.getProperty());

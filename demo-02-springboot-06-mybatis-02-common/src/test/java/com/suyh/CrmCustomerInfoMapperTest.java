@@ -1,6 +1,7 @@
 package com.suyh;
 
 import com.suyh.entity.CrmCustomerInfo;
+import com.suyh.entity.CrmCustomerInfoFilter;
 import com.suyh.mapper.CrmCustomerInfoMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,6 +10,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
+import java.sql.Time;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -81,7 +84,8 @@ public class CrmCustomerInfoMapperTest {
     public void test05() {
         CrmCustomerInfo model = new CrmCustomerInfo();
         model.setShortName("云弘");
-        CrmCustomerInfo filter = new CrmCustomerInfo();
+        model.setUpdatedTime(new Date());
+        CrmCustomerInfoFilter filter = new CrmCustomerInfoFilter();
         filter.setCreatedBy("苏云弘");
         int res = customerInfoMapper.updateModelByFilter(model, filter);
         System.out.println("updateModelByFilter res: " + res);
@@ -89,6 +93,16 @@ public class CrmCustomerInfoMapperTest {
 
     @Test
     public void test06() {
+
+        CrmCustomerInfoFilter filter = new CrmCustomerInfoFilter();
+        filter.setCreatedBy("云弘");
+        List<CrmCustomerInfo> crmCustomerInfos
+                = customerInfoMapper.selectModelByFilterLike(filter);
+        System.out.println(crmCustomerInfos);
+    }
+
+    @Test
+    public void test07() {
         CrmCustomerInfo crmCustomerInfo = new CrmCustomerInfo();
         crmCustomerInfo.setCustomerId(UUID.randomUUID().toString());
         int res = customerInfoMapper.insert(crmCustomerInfo);
