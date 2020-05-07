@@ -9,6 +9,7 @@ import tk.mybatis.mapper.common.Mapper;
 import java.util.List;
 
 /**
+ * 这个类只用来做查看注释解释用。不用做实际代码示例。
  * @param <Model>  返回实体类
  * @param <Filter> 过滤器实体类
  * @RegisterMapper 这个注解与下面的配置必须要有一个。否则会报错。

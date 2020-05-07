@@ -12,6 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * 这个类不用作实际作用，只用来做笔记查看注释作用。
+ */
 public class BaseMapperProvider extends MapperTemplate {
     public BaseMapperProvider(Class<?> mapperClass, MapperHelper mapperHelper) {
         super(mapperClass, mapperHelper);
