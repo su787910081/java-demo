@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: ynwl
+    active: oracle
   datasource:
     driver-class-name: ${db.driver}
     url: ${db.url}

@@ -228,4 +228,24 @@ public class CrmCustomerInfo extends BaseModel implements Serializable {
     public void setUsingStatus(BigDecimal usingStatus) {
         this.usingStatus = usingStatus;
     }
+
+    @Override
+    public String toString() {
+        return "CrmCustomerInfo{" +
+                super.toString() + ',' + ' ' +
+                "customerId='" + customerId + '\'' +
+                ", fullName='" + fullName + '\'' +
+                ", shortName='" + shortName + '\'' +
+                ", managerName='" + managerName + '\'' +
+                ", managerPhone='" + managerPhone + '\'' +
+                ", innerCustomer='" + innerCustomer + '\'' +
+                ", customerType='" + customerType + '\'' +
+                ", address='" + address + '\'' +
+                ", usPlatSystem='" + usPlatSystem + '\'' +
+                ", platformAdminUser='" + platformAdminUser + '\'' +
+                ", settleDay=" + settleDay +
+                ", price=" + price +
+                ", usingStatus=" + usingStatus +
+                '}';
+    }
 }

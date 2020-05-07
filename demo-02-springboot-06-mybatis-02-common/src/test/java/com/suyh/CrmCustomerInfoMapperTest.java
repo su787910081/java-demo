@@ -47,24 +47,25 @@ public class CrmCustomerInfoMapperTest {
 
     @Test
     public void test03() {
-        CrmCustomerInfo customerInfo = new CrmCustomerInfo();
-        List<CrmCustomerInfo> list = customerInfoMapper.selectPage(customerInfo, 0, 10);
-        if (list == null || list.isEmpty()) {
-            System.out.println("空");
-            return;
-        }
-
-        // 为什么是两个 null
-        for (CrmCustomerInfo info : list) {
-            System.out.println(info);
-        }
+//        CrmCustomerInfo customerInfo = new CrmCustomerInfo();
+//        List<CrmCustomerInfo> list = customerInfoMapper.selectPage(customerInfo, 0, 10);
+//        if (list == null || list.isEmpty()) {
+//            System.out.println("空");
+//            return;
+//        }
+//
+//        // 为什么是两个 null
+//        for (CrmCustomerInfo info : list) {
+//            System.out.println(info);
+//        }
 
     }
 
     @Test
     public void test04() {
         CrmCustomerInfo customerInfo = new CrmCustomerInfo();
-        List<CrmCustomerInfo> list = customerInfoMapper.selectModelByFilter(customerInfo);
+        customerInfo.setCreatedBy("苏云弘");
+        List<CrmCustomerInfo> list = customerInfoMapper.selectModelByFilter(null);
         if (list == null || list.isEmpty()) {
             System.out.println("空");
             return;
@@ -79,17 +80,12 @@ public class CrmCustomerInfoMapperTest {
 
     @Test
     public void test05() {
-        List<CrmCustomerInfo> list = customerInfoMapper.select003();
-        if (list == null || list.isEmpty()) {
-            System.out.println("空");
-            return;
-        }
-
-        // 为什么是两个 null
-        for (CrmCustomerInfo info : list) {
-            System.out.println(info);
-        }
-
+        CrmCustomerInfo model = new CrmCustomerInfo();
+        model.setShortName("云弘");
+        CrmCustomerInfo filter = new CrmCustomerInfo();
+        filter.setCreatedBy("苏云弘");
+        int res = customerInfoMapper.updateModelByFilter(model, filter);
+        System.out.println("updateModelByFilter res: " + res);
     }
 
     @Test

@@ -15,7 +15,7 @@ import java.util.List;
  * mapper:
  * mappers: com.suyh.utils.BaseMapper
  */
-@RegisterMapper
+//@RegisterMapper
 public interface BaseMapper<Model, Filter> {
 
     // 查询使用SelectProvider，
@@ -48,8 +48,8 @@ public interface BaseMapper<Model, Filter> {
      *
      * @return
      */
-    @SelectProvider(type = BaseMapperProvider.class, method = "dynamicSQL")
-    List<Model> selectModelByFilter(@Param("filter") Filter filter);
+//    @SelectProvider(type = BaseMapperProvider.class, method = "dynamicSQL")
+//    List<Model> selectModelByFilter(@Param("filter") Filter filter);
 
     /**
      * 单表分页查询 - 博客给出的示例
