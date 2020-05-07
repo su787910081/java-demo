@@ -71,7 +71,6 @@ public class CrmCustomerInfoMapperTest {
             return;
         }
 
-        // 为什么是两个 null
         for (CrmCustomerInfo info : list) {
             System.out.println(info);
         }

@@ -20,7 +20,7 @@ public class CustomBaseMapperProvider extends MapperTemplate {
     }
 
     /**
-     * 过滤查询
+     * 过滤(匹配)查询
      *
      * @param ms
      * @return
@@ -35,13 +35,18 @@ public class CustomBaseMapperProvider extends MapperTemplate {
         String selectAll = SqlHelper.selectAllColumns(entityClass);
         String fromTable = SqlHelper.fromTable(entityClass, tableName);
 
+
         List<SqlNode> sqlNodes = new ArrayList<>();
         sqlNodes.add(new StaticTextSqlNode(selectAll + fromTable));
-        SqlNode ifFilter = makeIfFilterNode(entityClass, paramFilter);
+        // where 标签中的条件判断语句，可以是模糊条件查询，也可是完全匹配。
+        Set<EntityColumn> columns = EntityHelper.getColumns(entityClass);
+        SqlNode ifFilter = makeIfFilterNode(columns, paramFilter);
         WhereSqlNode whereSqlNode = new WhereSqlNode(ms.getConfiguration(), ifFilter);
         sqlNodes.add(whereSqlNode);
         return new MixedSqlNode(sqlNodes);
     }
+
+
 
     /**
      * 生成过滤条件的 SqlNode
@@ -54,12 +59,11 @@ public class CustomBaseMapperProvider extends MapperTemplate {
      *         </if>
      *       ]]>
      *
-     * @param entityClass
+     * @param columns
      * @param paramFilter
      * @return
      */
-    private SqlNode makeIfFilterNode(Class<?> entityClass, String paramFilter) {
-        Set<EntityColumn> columns = EntityHelper.getColumns(entityClass);
+    public static SqlNode makeIfFilterNode(Set<EntityColumn> columns, String paramFilter) {
         List<SqlNode> ifNodes = new ArrayList<>();
         for (EntityColumn column : columns) {
             // AND created_by = #{filter.createdBy, jdbcType=NVARCHAR}
@@ -86,6 +90,9 @@ public class CustomBaseMapperProvider extends MapperTemplate {
         return ifFilter;
     }
 
+
+
+
     /**
      * 生成更新过滤条件的 SqlNode
      *      <![CDATA[
@@ -100,7 +107,7 @@ public class CustomBaseMapperProvider extends MapperTemplate {
      * @param paramModel
      * @return
      */
-    private SqlNode makeIfModelNodes(Class<?> entityClass, String paramModel) {
+    public static SqlNode makeIfModelNodes(Class<?> entityClass, String paramModel) {
         Set<EntityColumn> columns = EntityHelper.getColumns(entityClass);
         List<SqlNode> ifNodes = new ArrayList<>();
         for (EntityColumn column : columns) {
@@ -135,12 +142,14 @@ public class CustomBaseMapperProvider extends MapperTemplate {
         setResultType(ms, entityClass);
         String tableName = this.tableName(entityClass);
 
+
         // 拼接要更新字段的SQL
         SqlNode sqlSetIfModel = makeIfModelNodes(entityClass, paramModel);
         // 填充到<set> 标签中
         SetSqlNode setSqlNode = new SetSqlNode(ms.getConfiguration(), sqlSetIfModel);
         // 拼接过滤条件字段的SQL
-        SqlNode ifFilterNode = makeIfFilterNode(entityClass, paramFilter);
+        Set<EntityColumn> columns = EntityHelper.getColumns(entityClass);
+        SqlNode ifFilterNode = makeIfFilterNode(columns, paramFilter);
         // 填充到<where> 标签中
         WhereSqlNode whereSqlNode = new WhereSqlNode(ms.getConfiguration(), ifFilterNode);
 
@@ -168,16 +177,8 @@ public class CustomBaseMapperProvider extends MapperTemplate {
     }
 
 
-    /**
-     * 过滤(模糊)查询
-     *
-     * @return
-     */
-    public SqlNode selectModelByFilterLike(MappedStatement ms) {
-        String paramFilter = "filter";
 
-        // TODO:
-        return null;
-    }
+
+
 
 }

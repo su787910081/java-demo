@@ -23,12 +23,5 @@ public interface CustomBaseMapper<Model, Filter>  {
     @UpdateProvider(type = CustomBaseMapperProvider.class, method = "dynamicSQL")
     int updateModelByFilter(@Param("model") Model model, @Param("filter") Filter filter);
 
-    /**
-     * 过滤(模糊)查询
-     * @param filter
-     * @return
-     */
-    @SelectProvider(type = CustomBaseMapperProvider.class, method = "dynamicSQL")
-    List<Model> selectModelByFilterLike(@Param("filter") Filter filter);
 
 }
