@@ -2,7 +2,11 @@ package com.suyh.entity;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.apache.ibatis.type.JdbcType;
+import tk.mybatis.mapper.annotation.ColumnType;
 
+import javax.persistence.Id;
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
@@ -13,11 +17,15 @@ import java.math.BigDecimal;
  * @date: 2020-05-03 11:58:55
  */
 @ApiModel(value = "客户基本信息表结构：内部客户、供应商、承运商")
-public class CrmCustomerInfo extends BaseModel {
+public class CrmCustomerInfo extends BaseModel implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     /**
      * Column: CUSTOMER_ID
      *   主键：客户ID
      */
+    @Id
+    @ColumnType(jdbcType = JdbcType.NVARCHAR)
     @ApiModelProperty(value = "主键：客户ID")
     private String customerId;
 
@@ -25,6 +33,7 @@ public class CrmCustomerInfo extends BaseModel {
      * Column: FULL_NAME
      *   客户全称
      */
+    @ColumnType(jdbcType = JdbcType.NVARCHAR)
     @ApiModelProperty(value = "客户全称")
     private String fullName;
 
@@ -32,6 +41,7 @@ public class CrmCustomerInfo extends BaseModel {
      * Column: SHORT_NAME
      *   客户简称
      */
+    @ColumnType(jdbcType = JdbcType.NVARCHAR)
     @ApiModelProperty(value = "客户简称")
     private String shortName;
 
@@ -39,6 +49,7 @@ public class CrmCustomerInfo extends BaseModel {
      * Column: MANAGER_NAME
      *   负责人
      */
+    @ColumnType(jdbcType = JdbcType.NVARCHAR)
     @ApiModelProperty(value = "负责人")
     private String managerName;
 
@@ -46,6 +57,7 @@ public class CrmCustomerInfo extends BaseModel {
      * Column: MANAGER_PHONE
      *   联系电话
      */
+    @ColumnType(jdbcType = JdbcType.NVARCHAR)
     @ApiModelProperty(value = "联系电话")
     private String managerPhone;
 
@@ -53,6 +65,7 @@ public class CrmCustomerInfo extends BaseModel {
      * Column: INNER_CUSTOMER
      *   是否内部用户【radio:Y/N】
      */
+    @ColumnType(jdbcType = JdbcType.NVARCHAR)
     @ApiModelProperty(value = "是否内部用户【radio:Y/N】")
     private String innerCustomer;
 
@@ -60,6 +73,7 @@ public class CrmCustomerInfo extends BaseModel {
      * Column: CUSTOMER_TYPE
      *   客户类型【select:1-内部客户,2-供应商,3-承运商】
      */
+    @ColumnType(jdbcType = JdbcType.NVARCHAR)
     @ApiModelProperty(value = "客户类型【select:1-内部客户,2-供应商,3-承运商】")
     private String customerType;
 
@@ -67,6 +81,7 @@ public class CrmCustomerInfo extends BaseModel {
      * Column: ADDRESS
      *   联系地址
      */
+    @ColumnType(jdbcType = JdbcType.NVARCHAR)
     @ApiModelProperty(value = "联系地址")
     private String address;
 
@@ -74,6 +89,7 @@ public class CrmCustomerInfo extends BaseModel {
      * Column: US_PLAT_SYSTEM
      *   是否使用平台系统【radio:1-是,2-否】
      */
+    @ColumnType(jdbcType = JdbcType.NVARCHAR)
     @ApiModelProperty(value = "是否使用平台系统【radio:1-是,2-否】")
     private String usPlatSystem;
 
@@ -81,6 +97,7 @@ public class CrmCustomerInfo extends BaseModel {
      * Column: PLATFORM_ADMIN_USER
      *   平台管理员帐号，非自有系统用户才会有。
      */
+    @ColumnType(jdbcType = JdbcType.NVARCHAR)
     @ApiModelProperty(value = "平台管理员帐号，非自有系统用户才会有。")
     private String platformAdminUser;
 
@@ -88,6 +105,7 @@ public class CrmCustomerInfo extends BaseModel {
      * Column: SETTLE_DAY
      *   月结日，以0 表示自然月
      */
+    @ColumnType(jdbcType = JdbcType.NUMERIC)
     @ApiModelProperty(value = "月结日，以0 表示自然月")
     private BigDecimal settleDay;
 
@@ -95,6 +113,7 @@ public class CrmCustomerInfo extends BaseModel {
      * Column: PRICE
      *   价格，10 位长度，两位小数位
      */
+    @ColumnType(jdbcType = JdbcType.NVARCHAR)
     @ApiModelProperty(value = "价格，10 位长度，两位小数位")
     private BigDecimal price;
 
@@ -102,6 +121,7 @@ public class CrmCustomerInfo extends BaseModel {
      * Column: USING_STATUS
      *   启用状态【radio:1-是(启用),2-否(停用)】
      */
+    @ColumnType(jdbcType = JdbcType.NVARCHAR)
     @ApiModelProperty(value = "启用状态【radio:1-是(启用),2-否(停用)】")
     private BigDecimal usingStatus;
 

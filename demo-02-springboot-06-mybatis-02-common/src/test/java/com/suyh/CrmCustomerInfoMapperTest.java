@@ -10,6 +10,7 @@ import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.UUID;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = CommonMapperApplication.class)
@@ -89,6 +90,14 @@ public class CrmCustomerInfoMapperTest {
             System.out.println(info);
         }
 
+    }
+
+    @Test
+    public void test06() {
+        CrmCustomerInfo crmCustomerInfo = new CrmCustomerInfo();
+        crmCustomerInfo.setCustomerId(UUID.randomUUID().toString());
+        int res = customerInfoMapper.insert(crmCustomerInfo);
+        System.out.println("res: " + res);
     }
 
 

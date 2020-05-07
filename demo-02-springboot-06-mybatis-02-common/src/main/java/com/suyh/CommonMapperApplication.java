@@ -10,7 +10,7 @@ import tk.mybatis.spring.annotation.MapperScan;
  * @date 2020-05-04 17:51
  */
 @SpringBootApplication
-@MapperScan("com.suyh.mapper")
+@MapperScan("com.suyh.mapper")  // 注意这个注解，要使用  tk.mybatis.*** 这个包下的，不能使用mybatis 提供的。
 public class CommonMapperApplication {
     public static void main(String[] args) {
         SpringApplication.run(CommonMapperApplication.class, args);
