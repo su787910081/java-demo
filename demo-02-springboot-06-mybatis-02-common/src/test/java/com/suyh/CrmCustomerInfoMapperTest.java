@@ -11,6 +11,8 @@ import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
 import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -92,10 +94,16 @@ public class CrmCustomerInfoMapperTest {
     }
 
     @Test
-    public void test06() {
+    public void test06() throws ParseException {
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date updateBefore = sdf.parse("2020-05-08 00:35:39");
+        Date updateAfter = sdf.parse("2020-05-08 00:35:49");
 
         CrmCustomerInfoFilter filter = new CrmCustomerInfoFilter();
         filter.setCreatedBy("云弘");
+        filter.setUpdatedTimeBefore(updateBefore);
+        filter.setUpdatedTimeAfter(updateAfter);
         List<CrmCustomerInfo> crmCustomerInfos
                 = customerInfoMapper.selectModelByFilterLike(filter);
         System.out.println(crmCustomerInfos);

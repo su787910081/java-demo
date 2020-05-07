@@ -75,7 +75,8 @@ public class CustomerOracleMapperProvider extends MapperTemplate {
             if (column.getJavaType().equals(String.class)) {
                 // 字符串的模糊匹配
                 // AND created_by LIKE '%' || #{filter.createdBy, jdbcType=NVARCHAR} || '%'
-                String sqlText = String.format("AND %s LIKE '%%' || #{%s.%s, jdbcType = %s} || '%%'",
+                String sqlText = String.format(
+                        "AND %s LIKE '%%' || #{%s.%s, jdbcType = %s} || '%%'",
                         column.getColumn(), paramFilter, column.getProperty(),
                         column.getJdbcType().toString());
                 StaticTextSqlNode columnNode = new StaticTextSqlNode(sqlText);
@@ -91,7 +92,8 @@ public class CustomerOracleMapperProvider extends MapperTemplate {
 
                 // <![CDATA[ AND created_by >= #{filter.createdByBefore, jdbcType=TIMESTAMP} ]]>
                 String sqlTextBefore = String.format(
-                        "<![CDATA[ AND %s >= #{%s.%s, jdbcType = %s} ]]>",
+//                        "<![CDATA[ AND %s >= #{%s.%s, jdbcType = %s} ]]>",
+                        " AND %s >= #{%s.%s, jdbcType = %s}",
                         column.getColumn(), paramFilter, propertyBefore,
                         column.getJdbcType().toString());
                 StaticTextSqlNode columnNodeBefore = new StaticTextSqlNode(sqlTextBefore);
@@ -102,7 +104,8 @@ public class CustomerOracleMapperProvider extends MapperTemplate {
 
                 // <![CDATA[ AND created_by < #{filter.createdByAfter, jdbcType=TIMESTAMP} ]]>
                 String sqlTextAfter = String.format(
-                        "<![CDATA[ AND %s < #{%s.%s, jdbcType = %s} ]]>",
+//                        "<![CDATA[ AND %s < #{%s.%s, jdbcType = %s} ]]>",
+                        "AND %s < #{%s.%s, jdbcType = %s}",
                         column.getColumn(), paramFilter, propertyAfter,
                         column.getJdbcType().toString());
                 StaticTextSqlNode columnNodeAfter = new StaticTextSqlNode(sqlTextAfter);
