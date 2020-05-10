@@ -17,4 +17,15 @@ public interface CustomerOracleMapper<Model, Filter> {
     @SelectProvider(type = CustomerOracleMapperProvider.class, method = "dynamicSQL")
     List<Model> selectModelByFilterLike(@Param("filter") Filter filter);
 
+    /**
+     * 过滤(匹配+模糊)查询
+     * 可以指定部分字段匹配 + 部分字段模糊查询
+     * @param filterMatch 指定匹配查询的字段
+     * @param filterLike 指定模糊查询的字段
+     * @return
+     */
+    @SelectProvider(type = CustomerOracleMapperProvider.class, method = "dynamicSQL")
+    List<Model> selectModelByFilterMatchLike(
+            @Param("filterMatch") Filter filterMatch,
+            @Param("filterLike") Filter filterLike);
 }

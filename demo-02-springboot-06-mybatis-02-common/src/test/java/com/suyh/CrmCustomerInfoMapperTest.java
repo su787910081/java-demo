@@ -85,7 +85,7 @@ public class CrmCustomerInfoMapperTest {
     @Test
     public void test05() {
         CrmCustomerInfo model = new CrmCustomerInfo();
-        model.setShortName("云弘");
+        model.setShortName("雲弘");
         model.setUpdatedTime(new Date());
         CrmCustomerInfoFilter filter = new CrmCustomerInfoFilter();
         filter.setCreatedBy("苏云弘");
@@ -110,7 +110,25 @@ public class CrmCustomerInfoMapperTest {
     }
 
     @Test
-    public void test07() {
+    public void test07() throws ParseException {
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date updateBefore = sdf.parse("2020-05-08 00:35:39");
+        Date updateAfter = sdf.parse("2020-05-08 00:35:49");
+
+        CrmCustomerInfoFilter filterMatch = new CrmCustomerInfoFilter();
+        filterMatch.setShortName("雲弘");
+        CrmCustomerInfoFilter filterLike = new CrmCustomerInfoFilter();
+        filterLike.setCreatedBy("云弘");
+//        filterLike.setUpdatedTimeBefore(updateBefore);
+//        filterLike.setUpdatedTimeAfter(updateAfter);
+        List<CrmCustomerInfo> crmCustomerInfos
+                = customerInfoMapper.selectModelByFilterMatchLike(filterMatch, filterLike);
+        System.out.println(crmCustomerInfos);
+    }
+
+    @Test
+    public void test107() {
         CrmCustomerInfo crmCustomerInfo = new CrmCustomerInfo();
         crmCustomerInfo.setCustomerId(UUID.randomUUID().toString());
         int res = customerInfoMapper.insert(crmCustomerInfo);

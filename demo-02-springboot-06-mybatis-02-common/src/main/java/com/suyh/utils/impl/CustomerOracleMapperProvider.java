@@ -8,7 +8,6 @@ import tk.mybatis.mapper.mapperhelper.MapperHelper;
 import tk.mybatis.mapper.mapperhelper.MapperTemplate;
 import tk.mybatis.mapper.mapperhelper.SqlHelper;
 
-import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -45,6 +44,36 @@ public class CustomerOracleMapperProvider extends MapperTemplate {
     }
 
     /**
+     * 过滤(匹配+模糊)查询
+     * 可以指定部分字段匹配 + 部分字段模糊查询
+     *
+     * @return
+     */
+    public SqlNode selectModelByFilterMatchLike(MappedStatement ms) {
+        String paramFilterMatch = "filterMatch";
+        String paramFilterLike = "filterLike";
+
+        Class<?> entityClass = getEntityClass(ms);
+        setResultType(ms, entityClass);
+        String tableName = this.tableName(entityClass);
+
+        String selectAll = SqlHelper.selectAllColumns(entityClass);
+        String fromTable = SqlHelper.fromTable(entityClass, tableName);
+
+        List<SqlNode> sqlNodes = new ArrayList<>();
+        sqlNodes.add(new StaticTextSqlNode(selectAll + fromTable));
+        Set<EntityColumn> columns = EntityHelper.getColumns(entityClass);
+        SqlNode ifFilterMatch = CustomBaseMapperProvider.makeIfFilterNode(columns, paramFilterMatch);
+        SqlNode ifFilterLike = makeOracleIfFilterLikeNode(columns, paramFilterLike);
+        List<SqlNode> ifFilterList = new ArrayList<>();
+        ifFilterList.add(ifFilterMatch);
+        ifFilterList.add(ifFilterLike);
+        MixedSqlNode mixedSqlNodeFilters = new MixedSqlNode(ifFilterList);
+        WhereSqlNode whereSqlNode = new WhereSqlNode(ms.getConfiguration(), mixedSqlNodeFilters);
+        sqlNodes.add(whereSqlNode);
+        return new MixedSqlNode(sqlNodes);
+    }
+    /**
      * 生成模糊查询过滤条件的 SqlNode
      *
      *      <![CDATA[
@@ -76,7 +105,7 @@ public class CustomerOracleMapperProvider extends MapperTemplate {
                 // 字符串的模糊匹配
                 // AND created_by LIKE '%' || #{filter.createdBy, jdbcType=NVARCHAR} || '%'
                 String sqlText = String.format(
-                        "AND %s LIKE '%%' || #{%s.%s, jdbcType = %s} || '%%'",
+                        " AND %s LIKE '%%' || #{%s.%s, jdbcType = %s} || '%%'",
                         column.getColumn(), paramFilter, column.getProperty(),
                         column.getJdbcType().toString());
                 StaticTextSqlNode columnNode = new StaticTextSqlNode(sqlText);
@@ -90,9 +119,9 @@ public class CustomerOracleMapperProvider extends MapperTemplate {
                 String propertyBefore = columnProperty + "Before";
                 String propertyAfter = columnProperty + "After";
 
+                // 这里不能用  <![CDATA[  ]]> 包含，可能内部已经这样处理了。所以加上会报错
                 // <![CDATA[ AND created_by >= #{filter.createdByBefore, jdbcType=TIMESTAMP} ]]>
                 String sqlTextBefore = String.format(
-//                        "<![CDATA[ AND %s >= #{%s.%s, jdbcType = %s} ]]>",
                         " AND %s >= #{%s.%s, jdbcType = %s}",
                         column.getColumn(), paramFilter, propertyBefore,
                         column.getJdbcType().toString());
@@ -104,8 +133,7 @@ public class CustomerOracleMapperProvider extends MapperTemplate {
 
                 // <![CDATA[ AND created_by < #{filter.createdByAfter, jdbcType=TIMESTAMP} ]]>
                 String sqlTextAfter = String.format(
-//                        "<![CDATA[ AND %s < #{%s.%s, jdbcType = %s} ]]>",
-                        "AND %s < #{%s.%s, jdbcType = %s}",
+                        " AND %s < #{%s.%s, jdbcType = %s}",
                         column.getColumn(), paramFilter, propertyAfter,
                         column.getJdbcType().toString());
                 StaticTextSqlNode columnNodeAfter = new StaticTextSqlNode(sqlTextAfter);
@@ -116,7 +144,7 @@ public class CustomerOracleMapperProvider extends MapperTemplate {
             } else {
                 // 其他数据的精确匹配
                 // AND SettleDay = #{filter.SettleDay, jdbcType=NUMERIC}
-                String sqlText = String.format("AND %s = #{%s.%s, jdbcType = %s}",
+                String sqlText = String.format(" AND %s = #{%s.%s, jdbcType = %s}",
                         column.getColumn(), paramFilter, column.getProperty(),
                         column.getJdbcType().toString());
 

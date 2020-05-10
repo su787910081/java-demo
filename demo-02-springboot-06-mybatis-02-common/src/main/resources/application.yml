@@ -9,3 +9,7 @@ spring:
 
 
 
+# 打印SQL 到日志
+logging:
+  level:
+    com.suyh.mapper: debug

@@ -20,16 +20,32 @@ public class CustomBaseMapperProvider extends MapperTemplate {
     }
 
     /**
+     * 在这里有一点要求，那就是BaseMapperProvider处理BaseMapper<T>中的方法时，
+     * 方法名必须一样，因为这里需要通过反射来获取对应的方法，方法名一致一方面是为了减少开发人员的配置，
+     * 另一方面和接口对应看起来更清晰。
+     * <p>
+     * 除了方法名必须一样外，入参必须是MappedStatement ms，除此之外返回值可以是void或者SqlNode之一。
+     *
      * 过滤(匹配)查询
      *
      * @param ms
      * @return
      */
     public SqlNode selectModelByFilter(MappedStatement ms) {
+        // 这里的值是在mapper 接口类中指定的参数字符串，必须一致
         String paramFilter = "filter";
 
+        // 首先获取了实体类型，然后通过setResultType将返回值类型改为entityClass，
+        // 就相当于resultType=entityClass。
         Class<?> entityClass = getEntityClass(ms);
+
+        // 修改返回值类型为实体类型
+        // 这里为什么要修改呢？因为默认返回值是T，
+        // Java并不会自动处理成我们的实体类，默认情况下是Object，
+        // 对于所有的查询来说，我们都需要手动设置返回值类型。
+        // 对于insert,update,delete来说，这些操作的返回值都是int，所以不需要修改返回结果类型。
         setResultType(ms, entityClass);
+
         String tableName = this.tableName(entityClass);
 
         String selectAll = SqlHelper.selectAllColumns(entityClass);
@@ -67,7 +83,7 @@ public class CustomBaseMapperProvider extends MapperTemplate {
         List<SqlNode> ifNodes = new ArrayList<>();
         for (EntityColumn column : columns) {
             // AND created_by = #{filter.createdBy, jdbcType=NVARCHAR}
-            String sqlText = String.format("AND %s = #{%s.%s, jdbcType = %s}",
+            String sqlText = String.format(" AND %s = #{%s.%s, jdbcType = %s}",
                     column.getColumn(), paramFilter, column.getProperty(),
                     column.getJdbcType().toString());
 
@@ -103,8 +119,8 @@ public class CustomBaseMapperProvider extends MapperTemplate {
      *          </if>
      *       ]]>
      *
-     * @param entityClass
-     * @param paramModel
+     * @param entityClass 与表结构对应的实体类对象
+     * @param paramModel 在mapper 接口类中相应接口参数名，即：@Param() 中指定的字符串
      * @return
      */
     public static SqlNode makeIfModelNodes(Class<?> entityClass, String paramModel) {
