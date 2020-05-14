@@ -68,4 +68,29 @@ public class TestCalendar {
         }
 
     }
+
+    /**
+     * 获取当前时间的整点时间
+     * 当前时间：   Mon May 11 11:04:44 CST 2020
+     * 当前整点时间：Mon May 11 11:00:00 CST 2020
+     */
+    @Test
+    public void test04() {
+        Calendar nowTime = Calendar.getInstance();
+        System.out.println("当前时间：" + nowTime.getTime());
+
+        nowTime.set(Calendar.MILLISECOND, 0);
+        nowTime.set(Calendar.SECOND, 0);
+        nowTime.set(Calendar.MINUTE, 0);
+        System.out.println("整点时间：" + nowTime.getTime());
+
+        nowTime.set(Calendar.HOUR, 0);
+        System.out.println("当前日期：" + nowTime.getTime());
+    }
+
+    @Test
+    public void test05() {
+        Date nowTime = new Date();
+        System.out.println("当前时间戳: " + nowTime.getTime());
+    }
 }
