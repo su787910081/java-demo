@@ -2,15 +2,24 @@ package com.suyh.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.Date;
 
 public class Person {
     private String id;
     private String name;
+
+    // 说是属性值为null 时不进行序列化
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String sex;
 
+    /**
+     * 注解：@JsonIgnore 这个注解放在属性上面，则set 将不会解析，但是get 将会被序列化
+     * 原来当@JsonIgnore 存在时，@JsonFormat 注解将不允许存在
+     */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS")
+//    @JsonIgnore
     private Date createdDate;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS")
@@ -62,7 +71,6 @@ public class Person {
         return createdDate;
     }
 
-    @JsonIgnore
     public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
     }
@@ -71,7 +79,6 @@ public class Person {
         return updateDate;
     }
 
-    @JsonIgnore
     public void setUpdateDate(Date updateDate) {
         this.updateDate = updateDate;
     }
