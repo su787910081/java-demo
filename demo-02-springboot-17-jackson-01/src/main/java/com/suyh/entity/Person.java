@@ -6,12 +6,13 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.Date;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Person {
     private String id;
     private String name;
 
     // 说是属性值为null 时不进行序列化
-    @JsonInclude(JsonInclude.Include.NON_NULL)
+//    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String sex;
 
     /**

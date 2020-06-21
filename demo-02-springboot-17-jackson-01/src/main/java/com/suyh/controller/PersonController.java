@@ -21,7 +21,8 @@ public class PersonController {
         }
         logger.info("person: " + person);
         logger.info("resPerson: " + resPerson);
-//        resPerson.setCreatedDate(new Date());
+        resPerson.setCreatedDate(new Date());
+        resPerson.setId(null);
         return resPerson;
     }
 }
