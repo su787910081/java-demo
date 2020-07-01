@@ -34,7 +34,16 @@ public class TestTemp {
         list.add(person);
         String serializable = JsonUtil.serializable(list);
         System.out.println("serializable: " + serializable);
-        ArrayNode jsonNodes = JsonUtil.strToArrayNode(serializable);
+        ArrayNode jsonNodes = JsonUtil.deserializeToArrayNode(serializable);
         System.out.println("desc: " + jsonNodes);
+    }
+
+    @Test
+    public void test03() {
+        Person person = new Person("id", "name", "sex");
+        String serializableJson = JsonUtil.serializable(person);
+        System.out.println("serializableJson: " + serializableJson);
+        Person personRes = JsonUtil.deserialize(serializableJson, Person.class);
+        System.out.println("personRes: " + personRes);
     }
 }

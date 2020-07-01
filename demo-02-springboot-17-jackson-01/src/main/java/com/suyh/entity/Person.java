@@ -1,12 +1,15 @@
 package com.suyh.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Data;
+import lombok.ToString;
 
 import java.util.Date;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@ToString
+@Data
 public class Person {
     private String id;
     private String name;
@@ -33,54 +36,5 @@ public class Person {
         this.id = id;
         this.name = name;
         this.sex = sex;
-    }
-
-    @Override
-    public String toString() {
-        return "Person{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", sex='" + sex + '\'' +
-                '}';
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSex() {
-        return sex;
-    }
-
-    public void setSex(String sex) {
-        this.sex = sex;
-    }
-
-    public Date getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public Date getUpdateDate() {
-        return updateDate;
-    }
-
-    public void setUpdateDate(Date updateDate) {
-        this.updateDate = updateDate;
     }
 }
