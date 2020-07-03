@@ -4,7 +4,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.suyh</groupId>
+    <parent>
+        <groupId>com.suyh</groupId>
+        <artifactId>java-demo</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
     <artifactId>demo-01-parent</artifactId>
     <version>1.0-SNAPSHOT</version>
 
@@ -18,6 +23,11 @@
         <module>demo-01-log4j2</module>
         <module>demo-02-fastjson</module>
         <module>demo-05-vertx-test-junit5-01</module>
+        <module>demo-05-vertx-test-junit5-02</module>
+        <module>demo-05-vertx-test-unit-01</module>
+        <module>demo-06-mongodb-01-test</module>
+        <module>demo-07-java-unit-01</module>
+        <module>demo-08-mock-01</module>
         <module>demo-09-redis-01</module>
     </modules>
 
