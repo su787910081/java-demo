@@ -1,0 +1,15 @@
+
+@Validated
+@JsonIgnoredProperties(ignoreUnknown  = true)
+public class ExecuteTaskReq {
+
+  @NotBlank
+  @Length(max = 255)
+  @Pattern(regexp = "^[]$")
+  private String taskId;
+  
+  @NotNull
+  @range(min = 0, max = 5)
+  private Integer operation;
+
+}
