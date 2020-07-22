@@ -1,5 +1,6 @@
 cankao: https://www.jianshu.com/p/67d3637493c7
 https://blog.csdn.net/SwordSnapLiu/article/details/78540902
+https://www.jianshu.com/p/89a800eda155
 
 @Validated
 @JsonIgnoredProperties(ignoreUnknown  = true)
