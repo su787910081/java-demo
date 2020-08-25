@@ -1,8 +1,0 @@
-
-eureka:
-  client:
-    serviceUrl:    # Eureka客户端与Eureka服务端的交互地址，集群版配置对方的地址，单机版配置自己（如果不配置则默认本机8761端口）
-      defaultZone: http://localhost:6002/eureka/
-
-
-
