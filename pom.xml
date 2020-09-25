@@ -11,7 +11,7 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>demo-01-parent</module>
+        <module>day01</module>
     </modules>
 
 </project>
