@@ -3,7 +3,6 @@ package com.suyh.aba01;
 import lombok.ToString;
 
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.atomic.AtomicStampedReference;
 
 /**
