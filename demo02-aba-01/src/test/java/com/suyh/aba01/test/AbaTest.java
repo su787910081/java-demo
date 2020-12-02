@@ -37,7 +37,7 @@ public class AbaTest {
         }, "thread B").start();
 
         TimeUnit.SECONDS.sleep(4);
-        for (Node node = stack.pop(0); node != null; node = stack.pop(0)){
+        for (Node node = stack.pop(0); node != null; node = stack.pop(0)) {
             log.info("node current element: {}", node.item);
         }
     }
@@ -61,7 +61,7 @@ public class AbaTest {
         }, "thread B").start();
 
         TimeUnit.SECONDS.sleep(4);
-        for (Node node = stack.pop(0); node != null; node = stack.pop(0)){
+        for (Node node = stack.pop(0); node != null; node = stack.pop(0)) {
             log.info("node current element: {}", node.item);
         }
     }
