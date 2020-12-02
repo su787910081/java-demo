@@ -12,6 +12,7 @@
 
     <modules>
         <module>day01-0925</module>
+        <module>demo02-aba-01</module>
     </modules>
 
    <dependencyManagement>
