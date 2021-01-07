@@ -11,14 +11,16 @@
 
     <artifactId>demo-spring</artifactId>
 
+    <!-- 博客: javadoop.com/post/spring-ioc -->
+    <!-- 知乎: zhuanlan.zhihu.com/p/126671772 -->
     <properties>
-        <spring.version>5.2.4.RELEASE</spring.version>
+        <spring.version>4.3.11.RELEASE</spring.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring-webmvc</artifactId>
+            <artifactId>spring-context</artifactId>
             <version>${spring.version}</version>
         </dependency>
     </dependencies>
