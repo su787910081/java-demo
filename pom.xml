@@ -12,6 +12,7 @@
 
     <modules>
         <module>demo02-aba-01</module>
+        <module>demo-spring</module>
     </modules>
 
    <dependencyManagement>
