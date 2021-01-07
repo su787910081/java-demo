@@ -1,6 +1,7 @@
-package com.suyh.service.impl;
+package com.suyh.spring.service.impl;
 
-import com.suyh.service.HelloService;
+
+import com.suyh.spring.service.HelloService;
 
 /**
  * @author 苏雲弘

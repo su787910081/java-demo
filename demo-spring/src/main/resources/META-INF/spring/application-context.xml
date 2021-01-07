@@ -4,6 +4,6 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="helloService" class="com.suyh.service.impl.HelloServiceImpl"/>
+    <bean id="helloService" class="com.suyh.spring.service.impl.HelloServiceImpl"/>
 
 </beans>

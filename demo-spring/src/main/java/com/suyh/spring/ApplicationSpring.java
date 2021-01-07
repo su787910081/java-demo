@@ -1,6 +1,6 @@
-package com.suyh;
+package com.suyh.spring;
 
-import com.suyh.service.HelloService;
+import com.suyh.spring.service.HelloService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
