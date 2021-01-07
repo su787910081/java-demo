@@ -5,5 +5,5 @@
         http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="helloService" class="com.suyh.spring.service.impl.HelloServiceImpl"/>
-
+    <bean id="messageService" class="com.suyh.spring.service.impl.MessageServiceImpl"/>
 </beans>
