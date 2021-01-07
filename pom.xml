@@ -10,9 +10,6 @@
 
     <packaging>pom</packaging>
 
-    <modules>
-        <module>demo-01-parent</module>
-        <module>demo-spring</module>
-    </modules>
+
 
 </project>
