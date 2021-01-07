@@ -8,7 +8,7 @@ import com.suyh.spring.service.HelloService;
  * @since 2021-01-07
  */
 public class HelloServiceImpl implements HelloService {
-    @Override
+
     public String say() {
         return "hello";
     }
