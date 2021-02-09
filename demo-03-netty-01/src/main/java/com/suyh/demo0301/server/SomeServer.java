@@ -15,7 +15,7 @@ public class SomeServer {
         EventLoopGroup childGroup = new NioEventLoopGroup();
 
         try {
-            // 用户启动ServerChannel
+            // 用于启动ServerChannel
             ServerBootstrap bootstrap = new ServerBootstrap();
             bootstrap.group(parentGroup, childGroup)  // 指定eventLoopGroup
                     .channel(NioServerSocketChannel.class)  // 指定使用NIO进行通信

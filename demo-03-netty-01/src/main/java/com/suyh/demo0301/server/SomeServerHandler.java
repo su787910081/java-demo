@@ -18,9 +18,10 @@ import io.netty.util.CharsetUtil;
 public class SomeServerHandler extends ChannelInboundHandlerAdapter {
 
     /**
-     *  当Channel中有来自于客户端的数据时就会触发该方法的执行
-     * @param ctx  上下文对象
-     * @param msg   就是来自于客户端的数据
+     * 当Channel中有来自于客户端的数据时就会触发该方法的执行
+     *
+     * @param ctx 上下文对象
+     * @param msg 就是来自于客户端的数据
      * @throws Exception
      */
     @Override
@@ -32,12 +33,12 @@ public class SomeServerHandler extends ChannelInboundHandlerAdapter {
         System.out.println("msg = " + msg.getClass());
         System.out.println("客户端地址 = " + ctx.channel().remoteAddress());
 
-        if(msg instanceof HttpRequest) {
+        if (msg instanceof HttpRequest) {
             HttpRequest request = (HttpRequest) msg;
             System.out.println("请求方式：" + request.method().name());
             System.out.println("请求URI：" + request.uri());
 
-            if("/favicon.ico".equals(request.uri())) {
+            if ("/favicon.ico".equals(request.uri())) {
                 System.out.println("不处理/favicon.ico请求");
                 return;
             }
@@ -63,15 +64,18 @@ public class SomeServerHandler extends ChannelInboundHandlerAdapter {
     }
 
     /**
-     *  当Channel中的数据在处理过程中出现异常时会触发该方法的执行
-     * @param ctx  上下文
-     * @param cause  发生的异常对象
+     * 当Channel中的数据在处理过程中出现异常时会触发该方法的执行
+     *
+     * @param ctx   上下文
+     * @param cause 发生的异常对象
      * @throws Exception
      */
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
         cause.printStackTrace();
         // 关闭Channel
+        // 这里执行关闭之后，就会触发closeFuture 的执行，从而导致整个netty 服务器的关闭。即main 方法中的finally 块的执行
+        // 所以如果这里不调用close ，则即使服务异常不对外提供服务，整个系统也不会正常结束。
         ctx.close();
     }
 }
