@@ -1,4 +1,4 @@
-package com.suyh.demo0301;
+package com.suyh.demo0301.server;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;

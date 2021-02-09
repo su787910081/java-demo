@@ -1,4 +1,4 @@
-package com.suyh.demo0301;
+package com.suyh.demo0301.server;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
@@ -11,7 +11,7 @@ public class SomeServer {
 
         // 用于处理客户端连接请求，将请求发送给childGroup中的eventLoop
         EventLoopGroup parentGroup = new NioEventLoopGroup();
-        // 用于处理客户端请求
+        // 用于处理客户端I/O请求
         EventLoopGroup childGroup = new NioEventLoopGroup();
 
         try {
