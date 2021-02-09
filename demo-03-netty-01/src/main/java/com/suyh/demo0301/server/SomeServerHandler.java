@@ -58,7 +58,7 @@ public class SomeServerHandler extends ChannelInboundHandlerAdapter {
             // ctx.writeAndFlush(response);
             // ctx.channel().close();
             ctx.writeAndFlush(response)
-                    // 添加channel关闭监听器
+                    // 添加channel关闭监听器，一般情况我们不会在这里关闭它。
                     .addListener(ChannelFutureListener.CLOSE);
         }
     }

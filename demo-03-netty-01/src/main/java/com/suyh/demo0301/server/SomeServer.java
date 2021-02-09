@@ -19,6 +19,7 @@ public class SomeServer {
             ServerBootstrap bootstrap = new ServerBootstrap();
             bootstrap.group(parentGroup, childGroup)  // 指定eventLoopGroup
                     .channel(NioServerSocketChannel.class)  // 指定使用NIO进行通信
+                    // 这里一般不需要创建一个新的类来进行实现，简单的处理这里可以处理成一个lambda表达式
                     .childHandler(new SomeChannelInitializer());   // 指定childGroup中的eventLoop所绑定的线程所要处理的处理器
 
             // 指定当前服务器所监听的端口号
