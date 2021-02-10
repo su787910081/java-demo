@@ -16,7 +16,7 @@
         <module>demo-03-netty-01</module>
         <module>demo-03-netty-02</module>
         <module>demo-04-netty-01-LengthFieldBasedFrameDecoder</module>
-        <module>demo-05-netty-01</module>
+        <module>demo-05-netty-01-idle</module>
     </modules>
 
    <dependencyManagement>
