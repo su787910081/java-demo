@@ -14,20 +14,26 @@ import io.netty.handler.codec.string.StringEncoder;
 
 // 定义服务端启动类
 public class SomeServer {
+    // 长度域的字节数
+    public static final int LENGTH_SIZE = 4;
+    // 标志：长度的值里面是否包含长度域的字节长度
+    public static final boolean FLAG_INCLUDE_LENGTH = true;
+
     public static void main(String[] args) throws InterruptedException {
         NioEventLoopGroup parentGroup = new NioEventLoopGroup();
         NioEventLoopGroup childGroup = new NioEventLoopGroup();
         try {
             ServerBootstrap bootstrap = new ServerBootstrap();
             bootstrap.group(parentGroup, childGroup)
-                     .channel(NioServerSocketChannel.class)
+                    .channel(NioServerSocketChannel.class)
                     .childHandler(new ChannelInitializer<SocketChannel>() {
 
                         @Override
                         protected void initChannel(SocketChannel ch) throws Exception {
                             ChannelPipeline pipeline = ch.pipeline();
-                            pipeline.addLast(new LengthFieldBasedFrameDecoder(1024, 0, 4, 0, 4));
-                            pipeline.addLast(new LengthFieldPrepender(4, true));
+                            pipeline.addLast(new LengthFieldBasedFrameDecoder(
+                                    1024, 0, 4, 0, 4));
+                            pipeline.addLast(new LengthFieldPrepender(LENGTH_SIZE, FLAG_INCLUDE_LENGTH));
                             pipeline.addLast(new StringDecoder());
                             pipeline.addLast(new StringEncoder());
                             pipeline.addLast(new SomeServerHandler());

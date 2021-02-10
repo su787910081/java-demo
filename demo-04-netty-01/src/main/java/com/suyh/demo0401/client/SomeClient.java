@@ -1,5 +1,6 @@
 package com.suyh.demo0401.client;
 
+import com.suyh.demo0401.server.SomeServer;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -36,9 +37,15 @@ public class SomeClient {
                     .handler(new ChannelInitializer<SocketChannel>() {
                         @Override
                         protected void initChannel(SocketChannel ch) throws Exception {
+                            int lengthAdjustment = 0;
+                            if (SomeServer.FLAG_INCLUDE_LENGTH) {
+                                // 如果长度域里面的值包含了长度域的字节长度，则需要校正补偿值。
+                                lengthAdjustment = 0 - SomeServer.LENGTH_SIZE;
+                            }
                             ChannelPipeline pipeline = ch.pipeline();
                             pipeline.addLast(new LengthFieldPrepender(4));
-                            pipeline.addLast(new LengthFieldBasedFrameDecoder(1024, 0, 4, -4, 4));
+                            pipeline.addLast(new LengthFieldBasedFrameDecoder(
+                                    1024, 0, SomeServer.LENGTH_SIZE, lengthAdjustment, SomeServer.LENGTH_SIZE));
                             pipeline.addLast(new StringDecoder());
                             pipeline.addLast(new StringEncoder());
                             pipeline.addLast(new SomeClientHandler());
