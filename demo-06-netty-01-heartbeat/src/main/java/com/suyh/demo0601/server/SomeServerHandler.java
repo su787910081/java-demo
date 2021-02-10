@@ -2,37 +2,32 @@ package com.suyh.demo0601.server;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+import io.netty.handler.timeout.IdleState;
 import io.netty.handler.timeout.IdleStateEvent;
 
 public class SomeServerHandler extends ChannelInboundHandlerAdapter {
 
-    // 所有“规定动作”之外的所有事件都可以通过以下方法触发
-    @Override
-    public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
-        if(evt instanceof IdleStateEvent) {
-            IdleStateEvent event = (IdleStateEvent) evt;
-            String eventDes = null;
-            switch (event.state()) {
-                case READER_IDLE: eventDes = "读空闲超时"; break;
-                case WRITER_IDLE: eventDes = "写空闲超时"; break;
-                case ALL_IDLE: eventDes = "读和写空闲都超时";
-            }
-            System.out.println(eventDes);
-            // 关闭连接
-            // ctx.close();
-
-        } else {    // 其它事件触发
-            super.userEventTriggered(ctx, evt);
-        }
-    }
-
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        System.out.println("xxxxxxxxx");
+        System.out.println("接收到Client发送的消息：" + msg);
     }
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
         ctx.close();
+    }
+
+    // 用于捕获当前Server中的各种事件
+    @Override
+    public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
+        if (evt instanceof IdleStateEvent) {
+            IdleState state = ((IdleStateEvent) evt).state();
+            if (state == IdleState.READER_IDLE) {
+                System.out.println("将要断开连接");
+                ctx.close();
+            } else {
+                super.userEventTriggered(ctx, evt);
+            }
+        }
     }
 }

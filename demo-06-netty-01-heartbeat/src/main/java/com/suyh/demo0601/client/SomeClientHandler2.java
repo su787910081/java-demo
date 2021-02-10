@@ -9,7 +9,7 @@ import io.netty.util.concurrent.ScheduledFuture;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
-public class SomeClientHandler extends ChannelInboundHandlerAdapter {
+public class SomeClientHandler2 extends ChannelInboundHandlerAdapter {
     private ScheduledFuture schedule;
     private GenericFutureListener listener;
 
@@ -30,6 +30,9 @@ public class SomeClientHandler extends ChannelInboundHandlerAdapter {
                 channel.writeAndFlush("~PING~");
             } else {
                 System.out.println("与Server间的连接已经关闭");
+                // 一旦连接被关闭，则将监听器移除，这样就不会再发生
+                // 心跳方法的递归调用了，以防止栈溢出
+                schedule.removeListener(listener);
             }
         }, interval, TimeUnit.SECONDS);
 
@@ -40,12 +43,6 @@ public class SomeClientHandler extends ChannelInboundHandlerAdapter {
 
         // 向定时器添加监听器
         schedule.addListener(listener);
-    }
-
-    @Override
-    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-        // 一旦连接被关闭，则将监听器移除，这样就不会再发生心跳方法的递归调用了，以防止栈溢出
-        schedule.removeListener(listener);
     }
 
     @Override

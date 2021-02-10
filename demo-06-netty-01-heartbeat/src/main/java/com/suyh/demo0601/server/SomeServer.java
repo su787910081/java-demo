@@ -8,7 +8,6 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.codec.LineBasedFrameDecoder;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
 import io.netty.handler.timeout.IdleStateHandler;
@@ -26,16 +25,9 @@ public class SomeServer {
                         @Override
                         protected void initChannel(SocketChannel ch) throws Exception {
                             ChannelPipeline pipeline = ch.pipeline();
-                            // 添加一个基于行的解码器
-                            pipeline.addLast(new LineBasedFrameDecoder(2048));
-                            // 若在3秒内当前服务器没有发生读操作，则会触发读操作空闲事件
-                            // 若在5秒内当前服务器没有发生写操作，则会触发写操作空闲事件
-                            // pipeline.addLast(new IdleStateHandler(3, 5, 0));
-                            // 若在5秒内同时即发生了读又发生了写操作才不会触发all操作空闲事件
-                            // 若在5秒内读与写操作有任何一项没有发生，都会触发all操作空闲事件
-                            pipeline.addLast(new IdleStateHandler(0, 0, 5));
                             pipeline.addLast(new StringDecoder());
                             pipeline.addLast(new StringEncoder());
+                            pipeline.addLast(new IdleStateHandler(5, 0, 0));
                             pipeline.addLast(new SomeServerHandler());
                         }
                     });
