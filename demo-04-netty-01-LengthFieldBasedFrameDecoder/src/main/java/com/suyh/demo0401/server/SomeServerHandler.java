@@ -6,6 +6,10 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * {@link SomeServer}   链接到类
+ * {@link #exceptionCaught(ChannelHandlerContext, Throwable)}  链接到方法
+ */
 public class SomeServerHandler extends ChannelInboundHandlerAdapter {
 
     @Override
