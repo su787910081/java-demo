@@ -17,6 +17,7 @@ public class SomeClient {
         NioEventLoopGroup group = new NioEventLoopGroup();
         try {
             /*
+             * TODO: suyh - 参数说明
              * @param maxFrameLength        整个帧允许的最大长度
              * @param lengthFieldOffset     长度域的偏移量，即：从开始位置偏移多少个字节得到长度域的开始下标位置。
              * @param lengthFieldLength     长度域的长度值，可选值为: 1, 2, 3, 4, 8。即这个长度域我们约定了它是几个字节。
