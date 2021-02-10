@@ -28,24 +28,17 @@ public class SomeClientHandler extends ChannelInboundHandlerAdapter {
             if (channel.isActive()) {
                 System.out.println("向Server发送心跳");
                 channel.writeAndFlush("~PING~");
+                sendHeartbeat(channel);
             } else {
                 System.out.println("与Server间的连接已经关闭");
             }
         }, interval, TimeUnit.SECONDS);
-
-        listener = (future) -> {
-            // 再次发送心跳
-            sendHeartbeat(channel);
-        };
-
-        // 向定时器添加监听器
-        schedule.addListener(listener);
     }
 
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
         // 一旦连接被关闭，则将监听器移除，这样就不会再发生心跳方法的递归调用了，以防止栈溢出
-        schedule.removeListener(listener);
+        // schedule.removeListener(listener);
     }
 
     @Override
