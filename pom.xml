@@ -16,6 +16,7 @@
         <module>demo-03-netty-01</module>
         <module>demo-03-netty-02</module>
         <module>demo-04-netty-01-LengthFieldBasedFrameDecoder</module>
+        <module>demo-05-netty-01</module>
     </modules>
 
    <dependencyManagement>
@@ -73,7 +74,7 @@
            <dependency>
                <groupId>io.netty</groupId>
                <artifactId>netty-all</artifactId>
-               <version>4.1.36.Final</version>
+               <version>4.1.42.Final</version>
            </dependency>
        </dependencies>
    </dependencyManagement>
