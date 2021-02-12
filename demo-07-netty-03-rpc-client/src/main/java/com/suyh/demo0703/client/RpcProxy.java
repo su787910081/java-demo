@@ -18,7 +18,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
 public class RpcProxy {
-    public static <T> T create(Class<?> clazz) {
+    public static <T> T create(Class<T> clazz) {
         return (T) Proxy.newProxyInstance(clazz.getClassLoader(), new Class[]{clazz},
                 new InvocationHandler() {
                     @Override
@@ -60,7 +60,7 @@ public class RpcProxy {
             invocation.setMethodName(method.getName());
             invocation.setParamTypes(method.getParameterTypes());
             invocation.setParamValues(args);
-            future.channel().writeAndFlush(invocation);
+            future.channel().writeAndFlush(invocation).sync();
             future.channel().closeFuture().sync();
         } finally {
             group.shutdownGracefully();

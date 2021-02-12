@@ -15,7 +15,6 @@ public class RpcServerHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        // TODO: suyh -
         if (msg instanceof Invocation) {
             Invocation message = (Invocation) msg;
             if (registerMap.containsKey(message.getClassName())) {
@@ -23,7 +22,7 @@ public class RpcServerHandler extends ChannelInboundHandlerAdapter {
                 Object result = provider.getClass().getMethod(message.getMethodName(), message.getParamTypes())
                         .invoke(provider, message.getParamValues());
                 ctx.writeAndFlush(result);
-                // ctx.close();
+                 ctx.close();
             }
         }
     }
