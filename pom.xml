@@ -19,7 +19,8 @@
         <module>demo-05-netty-01-idle</module>
         <module>demo-06-netty-01-heartbeat</module>
         <module>demo-07-netty-01-rpc-api</module>
-        <module>demo-07-02-rpc-server</module>
+        <module>demo-07-netty-02-rpc-server</module>
+        <module>demo-07-netty-03-rpc-client</module>
     </modules>
 
    <dependencyManagement>

@@ -1,6 +1,5 @@
 package com.suyh.demo0702.server;
 
-import com.suyh.demo0702.server.RpcServerHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -10,7 +9,6 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.codec.http.HttpServerCodec;
 import io.netty.handler.codec.serialization.ClassResolvers;
 import io.netty.handler.codec.serialization.ObjectDecoder;
 import io.netty.handler.codec.serialization.ObjectEncoder;
@@ -91,7 +89,7 @@ public class RpcServer {
                             pipeline.addLast(new ObjectEncoder());
                             pipeline.addLast(new ObjectDecoder(
                                     Integer.MAX_VALUE, ClassResolvers.cacheDisabled(null)));
-                            pipeline.addLast(new RpcServerHandler());
+                            pipeline.addLast(new RpcServerHandler(registryMap));
                         }
                     });
 
