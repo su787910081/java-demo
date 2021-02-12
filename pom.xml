@@ -21,6 +21,7 @@
         <module>demo-07-netty-01-rpc-api</module>
         <module>demo-07-netty-02-rpc-server</module>
         <module>demo-07-netty-03-rpc-client</module>
+        <module>demo-08-netty-01-mulitport</module>
     </modules>
 
    <dependencyManagement>
