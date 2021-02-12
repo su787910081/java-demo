@@ -60,7 +60,7 @@ public class RpcProxy {
             invocation.setMethodName(method.getName());
             invocation.setParamTypes(method.getParameterTypes());
             invocation.setParamValues(args);
-            future.channel().writeAndFlush(invocation).sync();
+            future.channel().writeAndFlush(invocation);
             future.channel().closeFuture().sync();
         } finally {
             group.shutdownGracefully();
